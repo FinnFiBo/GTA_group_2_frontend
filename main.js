@@ -389,7 +389,7 @@ function stopTracking() {
         .then(() => {
 
             //Get point history
-            fetch(`${app_url}/point_history?trip_id=${appState.trip_id}`)
+            fetch(`${app_url}/point_history?trip_id=${appState.trip_id}`, { mode: 'no-cors' })
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) {

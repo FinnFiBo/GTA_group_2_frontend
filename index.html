@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Web-App GTA</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Source+Sans+3&display=swap" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous" defer></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin="" defer></script>
+    <script src="js/main.js"></script>
+
+</head>
+
+<body onload = "onload()">
+    <h1>Recreational Index</h1>
+
+    <div id="buttons-container">
+        <button id="start">Start</button>
+        <div id="mean_ri">
+            <span class="mean-text">Mean RI</span>
+            <span id="mean_ri_value" class="mean-value">0</span>
+        </div>
+        <button id="end">End</button>
+    </div>
+    
+    <div class="content">
+        <div id="map"></div>
+    </div>
+
+    <footer>
+        <div>
+            &copy; Gruppe 3<br>
+            Finn Bogatu, Rhéa Ehrle, Robin Holdener, Sara Bachmann <br>
+            IKG @ ETH Zürich
+        </div>
+    </footer>
+
+</body>
+</html>

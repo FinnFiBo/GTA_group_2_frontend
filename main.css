@@ -1,0 +1,113 @@
+html, body {
+    width: 100%;
+    font-family: 'Source Sans 3', sans-serif;
+    margin: 0;
+}
+
+html {
+    overflow: hidden;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Anton', sans-serif;
+}
+
+h1 {
+    color: #000000;
+    background: #4caf50;
+    padding: 12px 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.8em;
+    margin: 0;
+    z-index: 9;
+    text-align: center;
+    line-height: 1.2;
+}
+
+footer {
+    color: #ffffff;
+    background: #4caf50;
+    padding: 8px 15px; 
+    font-size: 0.6em; 
+    line-height: 1.2; 
+    text-align: left;
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.3);
+    z-index: 9;
+}
+
+.content {
+    flex-grow: 1;
+    align-items: stretch;
+    display: flex;
+}
+
+#map {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+#buttons-container {
+    position: fixed;
+    top: 20%;
+    right: 5%;
+    gap: 15px;
+    z-index: 2; 
+}
+
+#buttons-container button {
+    background-color: #4caf50;
+    color: rgb(255, 255, 255);
+    font-size: 1.4em;
+    font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+#buttons-container button:hover {
+    background-color: #388e3c;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px);
+}
+
+#buttons-container button:active {
+    transform: translateY(2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#mean_ri {
+    background-color: #4caf50;
+    color: rgb(0, 0, 0);
+    font-size: 1.2em; 
+    font-weight: bold; 
+    font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+    padding: 15px 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    position: fixed;
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center; 
+    letter-spacing: 1px; 
+    z-index: 2; 
+}
+
+#mean_ri .mean-value {
+    color: rgb(255, 255, 255);
+    font-weight: normal;
+    margin-top: 5px;
+    display: block;
+}

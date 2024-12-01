@@ -429,7 +429,7 @@ function get_ri(latlng) {
     let lat = latlng.lat;
     let lng = latlng.lng;
     // Hier RI-Wert anpassen oder berechnen
-    fetch(`${app_url}/calculate_ri?lat=${lat}&lng=${lng}`)
+    fetch(`${app_url}/calculate_ri?lat=${lat}&lng=${lng}`, { mode: 'no-cors' })
         .then(response => response.json())
         .then(data => {
             if (data.error) {
@@ -437,10 +437,10 @@ function get_ri(latlng) {
                 return;
             }
             // Ändern, so dass man die Layer aussuchen kann
-            return (data.ri, data.noise, data.distance) / 3
+            return (data.ri, data.noise, data.distance) / 3;
         })
         .catch(error => {
             console.error("Fehler beim Berechnen des RI-Wertes:", error);
-            return 7; // Fallback auf 5, falls ein Fehler auftritt
+            return 7; // Fallback auf 7, falls ein Fehler auftritt
         });
 }

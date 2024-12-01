@@ -355,7 +355,7 @@ function startTracking() {
             map.setView(appState.latLng, 15); // Fokussiere und zoome auf Level 15
         }
 
-        let ri_value = 7; // hier RI-Wert anpassen oder berechnen
+        let ri_value = get_ri(appState.latLng); // hier RI-Wert anpassen oder berechnen
 
         insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, ri_value);
 
@@ -366,12 +366,8 @@ function startTracking() {
         timer = setInterval(() => {
             if (appState.latLng && appState.time) {
                 
-                //fetch(`${app_url}calculate_ri?lat=${appState.latLng.lat}&lng=${appState.latLng.lng}`)
-                //.then(response => response.json())
-                //.then(data => {
-                   // ri_value = data.ri_value;
-                //})
-                ri_value += 1;
+                let ri_value = get_ri(appState.latLng); // hier RI-Wert anpassen oder berechnen
+    
                 insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, ri_value);
             }
         }, 10000);  // Alle 10 Sekunden
@@ -386,11 +382,23 @@ function startTracking() {
 // Tracking stop
 function stopTracking() {
 
-    let ri_value = 7; // hier RI-Wert anpassen oder berechnen
+    let ri_value = get_ri(appState.latLng); // hier RI-Wert anpassen oder berechnen
 
     // Letzten Punkt einfügen und nach Abschluss die Linie zeichnen
     insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, ri_value)
         .then(() => {
+
+            //Get point history
+            fetch(`${app_url}/point_history?trip_id=${appState.trip_id}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        console.error("Fehler beim Abrufen der Punkte:", data.error);
+                        return;
+                    }
+                    appState.pointHistory = data;
+                })
+
             // drawColoredLine erst nach erfolgreichem Insert aufrufen
             drawColoredLine();
 
@@ -398,6 +406,8 @@ function stopTracking() {
             if (appState.pointHistory.length > 0) {
                 let mean_ri = appState.pointHistory.reduce((sum, point) => sum + (point.ri_value || 0), 0) / appState.pointHistory.length;
                 $("#mean_ri_value").text(mean_ri.toFixed(2));
+            } else {
+                $("#mean_ri_value").text("N/A");
             }
 
             // Buttons umschalten
@@ -412,4 +422,12 @@ function stopTracking() {
     clearInterval(timer);
     timer = null;
     appState.isTracking = false;
+}
+
+// Berechnung des RI-Wertes
+function get_ri(latlng) {
+    let lat = latlng.lat;
+    let lng = latlng.lng;
+    // Hier RI-Wert anpassen oder berechnen
+    return 5; // Beispielwert
 }

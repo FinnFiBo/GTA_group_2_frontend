@@ -429,5 +429,17 @@ function get_ri(latlng) {
     let lat = latlng.lat;
     let lng = latlng.lng;
     // Hier RI-Wert anpassen oder berechnen
-    return 5; // Beispielwert
+    fetch(`${app_url}/calculate_ri?lat=${lat}&lng=${lng}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                console.error("Fehler beim Berechnen des RI-Wertes:", data.error);
+                return;
+            }
+            return data.ri_value;
+        })
+        .catch(error => {
+            console.error("Fehler beim Berechnen des RI-Wertes:", error);
+            return 7; // Fallback auf 5, falls ein Fehler auftritt
+        });
 }

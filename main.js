@@ -436,7 +436,8 @@ function get_ri(latlng) {
                 console.error("Fehler beim Berechnen des RI-Wertes:", data.error);
                 return;
             }
-            return data.ri_value;
+            // Ändern, so dass man die Layer aussuchen kann
+            return (data.ri, data.noise, data.distance) / 3
         })
         .catch(error => {
             console.error("Fehler beim Berechnen des RI-Wertes:", error);

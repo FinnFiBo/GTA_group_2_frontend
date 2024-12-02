@@ -432,10 +432,10 @@ function get_ri(latlng) {
     fetch(`${app_url}/calculate_ri?lat=${lat}&lng=${lng}`, { 
         method: "GET", 
         headers: { 
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
+            'Content-Type': 'application/json'
         },
-        mode: 'cors'
+        mode: 'cors',
+        redirect: 'follow'
     })
         .then(response => {response.json();console.log(response);})
         .then(data => {

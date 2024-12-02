@@ -218,7 +218,7 @@ function drawColoredLine() {
 
 // INSERT point
 // REF: https://github.com/Georepublic/leaflet-wfs/blob/master/index.html#L201
-function insertPoint(lat, lng, time, trip_id, ri_value) {
+function insertPoint(lat, lng, time, trip_id, ri_value, noise, distance) {
     return new Promise((resolve, reject) => {
 	let postData = `<wfs:Transaction
 			  service="WFS"
@@ -244,6 +244,8 @@ function insertPoint(lat, lng, time, trip_id, ri_value) {
 							  <gml:coordinates xmlns:gml="http://www.opengis.net/gml" decimal="." cs="," ts=" ">${lng},${lat}</gml:coordinates>
 						  </gml:Point>
 					  </geometry>
+                      <noise>${noise}</noise>
+                      <distance>${distance}</distance>
 				  </GTA24_lab06:webapp_trajectory_point>
 			  </wfs:Insert>
 		  </wfs:Transaction>`;

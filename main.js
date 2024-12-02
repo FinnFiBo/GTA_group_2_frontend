@@ -429,7 +429,7 @@ function get_ri(latlng) {
     let lat = latlng.lat;
     let lng = latlng.lng;
     // Hier RI-Wert anpassen oder berechnen
-    fetch(`${app_url}/calculate_ri?lat=${lat}&lng=${lng}`)
+    fetch(`${app_url}/calculate_ri?lat=${lat}&lng=${lng}`,{ method: "GET" , headers: { 'Content-Type': 'application/json' } })
         .then(response => {response.json();console.log(response);})
         .then(data => {
             if (data.error) {

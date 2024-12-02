@@ -390,9 +390,10 @@ function stopTracking() {
         .then(() => {
 
             //Get point history
-            fetch(`${app_url}/point_history?trip_id=${appState.trip_id}`, { mode: 'no-cors' })
+            fetch(`${app_url}/point_history?trip_id=${appState.trip_id}`, { method : "GET" })
                 .then(response => response.json())
                 .then(data => {
+                    console.log("Punkte abgerufen:", data);
                     if (data.error) {
                         console.error("Fehler beim Abrufen der Punkte:", data.error);
                         return;
@@ -432,23 +433,18 @@ function get_ri(latlng) {
     // Hier RI-Wert anpassen oder berechnen
     fetch(`${app_url}/calculate_ri?lat=${lat}&lng=${lng}`, { 
         method: "GET", 
-        headers: { 
-            'Content-Type': 'application/json'
-        },
-        mode: 'cors',
-        redirect: 'follow'
     })
-        .then(response => {response.json();console.log(response);})
+        .then(response => response.json())
         .then(data => {
             if (data.error) {
                 console.error("Fehler beim Berechnen des RI-Wertes:", data.error);
                 return;
             }
             // Ändern, so dass man die Layer aussuchen kann
-            return (data.ri, data.noise, data.distance) / 3;
+            return (data.ri + data.noise + data.distance) / 3;
         })
         .catch(error => {
-            console.error("Fehler beim Berechnen des RI-Wertes:", error);
+            console.error("Error: Fehler beim Berechnen des RI-Wertes:", error);
             return 7; // Fallback auf 7, falls ein Fehler auftritt
         });
 }

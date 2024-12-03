@@ -330,7 +330,7 @@ function startTracking() {
             let errMsg = $("#error-messages"); // Stelle sicher, dass dieses Element existiert
             errMsg.text("Bitte warten Sie, bis Ihre Position geladen wurde.");
             errMsg.show();
-            return; // Funktion abbrechen
+            return; //  Funktion abbrechen
         }
         
         if (map && appState.latLng) {

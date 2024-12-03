@@ -153,7 +153,6 @@ function drawColoredLine() {
 
     appState.color_points.clearLayers(); // Alte farbige Linien entfernen
     appState.points.clearLayers();
-    console.log(appState.points)
 
     for (let i = 0; i < appState.pointHistory.length - 1; i++) {
         let currentPoint = appState.pointHistory[i];
@@ -336,6 +335,8 @@ function startTracking() {
         if (map && appState.latLng) {
             map.setView(appState.latLng, 15); // Fokussiere und zoome auf Level 15
         }
+
+        appState.color_points.clearLayers(); 
 
         get_ri(appState.latLng) // hier RI-Wert anpassen oder berechnen
         .then(values => {

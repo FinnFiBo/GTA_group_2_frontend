@@ -130,11 +130,17 @@ function onload() {
 }
 
 function getColorByRI(riValue) {
-    if (riValue < 20) return [255, 0, 0];     // Rot
-    if (riValue < 40) return [255, 165, 0];   // Orange
-    if (riValue < 60) return [255, 255, 0];   // Gelb
-    if (riValue < 80) return [0, 128, 0];     // Grün
-    return [0, 0, 255];                      // Blau
+    if (riValue < 10) return [255, 0, 0];        // Dunkelrot
+    if (riValue < 20) return [255, 69, 0];       // Helles Rot-Orange
+    if (riValue < 30) return [255, 140, 0];      // Dunkel-Orange
+    if (riValue < 40) return [255, 165, 0];      // Orange
+    if (riValue < 50) return [255, 215, 0];      // Goldgelb
+    if (riValue < 60) return [255, 255, 0];      // Gelb
+    if (riValue < 70) return [173, 255, 47];     // Gelbgrün
+    if (riValue < 80) return [0, 128, 0];        // Grün
+    if (riValue < 90) return [0, 191, 255];      // Himmelblau
+    if (riValue < 100) return [0, 0, 255];       // Blau
+    return [75, 0, 130];                        // Indigo (für Werte ≥ 100)
 }
 
 function interpolateColor(rgb1, rgb2, factor) {

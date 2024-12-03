@@ -30,6 +30,9 @@ h1 {
     text-align: center;
     line-height: 1.2;
 }
+h1 svg {
+    margin-right: 10px; 
+}
 
 footer {
     color: #ffffff;

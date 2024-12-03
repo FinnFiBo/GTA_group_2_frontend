@@ -200,6 +200,7 @@ function drawColoredLine() {
             fillOpacity: 0.8
         }).bindPopup(`RI: ${currentPoint.ri_value}`);
         appState.color_points.addLayer(startPointMarker);
+        
 
         // Markiere den Endpunkt (als separate Markierung oder Teil der nächsten Iteration)
         if (i === appState.pointHistory.length - 2) {

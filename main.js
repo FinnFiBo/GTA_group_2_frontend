@@ -243,8 +243,8 @@ function insertPoint(lat, lng, time, trip_id, ri_value, noise, distance) {
 							  <gml:coordinates xmlns:gml="http://www.opengis.net/gml" decimal="." cs="," ts=" ">${lng},${lat}</gml:coordinates>
 						  </gml:Point>
 					  </geometry>
-                      <noise>${noise}</noise>
-                      <distance>${distance}</distance>
+                      <noise_value>${noise}</noise_value>
+                      <tree_distance>${distance}</tree_distance>
 				  </GTA24_lab06:webapp_trajectory_point>
 			  </wfs:Insert>
 		  </wfs:Transaction>`;
@@ -325,7 +325,7 @@ function fetchHighestTripId(callback) {
             if (data.features && data.features.length > 0) {
                 highestTripId = parseInt(data.features[0].properties.trip_id, 10);
             }
-            callback(highestTripId + 1);
+            callback(5);
         },
         error: function (xhr, status, error) {
             console.error("Fehler beim Abrufen der höchsten Trip-ID:", error);

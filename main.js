@@ -137,7 +137,6 @@ function getColorByRI(riValue) {
     return [0, 0, 255];                      // Blau
 }
 
-
 function interpolateColor(rgb1, rgb2, factor) {
     const r = Math.round(rgb1[0] + factor * (rgb2[0] - rgb1[0]));
     const g = Math.round(rgb1[1] + factor * (rgb2[1] - rgb1[1]));
@@ -151,10 +150,10 @@ function drawColoredLine() {
         return; // Es gibt keine Punkte, zwischen denen eine Linie gezeichnet werden kann
     }
 
-    console.log(appState.points)
-    appState.color_points.clearLayers(); // Alte farbige Linien entfernen
-    appState.points.clearLayers();
-    console.log(appState.points)
+    map.removeLayer(appState.points); 
+    appState.points.clearLayers();   
+    map.addLayer(appState.points); 
+
 
     for (let i = 0; i < appState.pointHistory.length - 1; i++) {
         let currentPoint = appState.pointHistory[i];
@@ -377,10 +376,6 @@ function stopTracking() {
     // Letzten Punkt einfügen und nach Abschluss die Linie zeichnen
         insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, values[0], values[1], values[2])
             .then(() => {
-
-                map.removeLayer(appState.points); 
-                appState.points.clearLayers();   
-                map.addLayer(appState.points); 
 
                 //Get point history
                 fetch(`${app_url}point_history?trip_id=${appState.trip_id}`, { method : "GET" })

@@ -150,28 +150,25 @@ function drawColoredLine() {
         return; // Es gibt keine Punkte, zwischen denen eine Linie gezeichnet werden kann
     }
 
-    console.log("Anzahl der Layer in points:", appState.points.getLayers().length);
     map.removeLayer(appState.points); 
     appState.points.clearLayers();   
     map.addLayer(appState.points); 
-    console.log("Anzahl der Layer in points:", appState.points.getLayers().length);
 
     for (let i = 0; i < appState.pointHistory.length - 1; i++) {
         let currentPoint = appState.pointHistory[i];
         let nextPoint = appState.pointHistory[i + 1];
 
-        //console.log("RI Value:", currentPoint.ri_value);
-        //console.log("RI Value:", nextPoint.ri_value);
-
         // Berechne Farben der Punkte als RGB-Werte
         let currentColor = getColorByRI(currentPoint.ri_value || 5);
         let nextColor = getColorByRI(nextPoint.ri_value || 5);
 
-        //console.log("color:", currentColor);
-        //console.log("color:", nextColor);
+        // Berechne die Distanz zwischen den Punkten
+        let startLatLng = L.latLng(currentPoint.lat, currentPoint.lng);
+        let endLatLng = L.latLng(nextPoint.lat, nextPoint.lng);
+        let distance = startLatLng.distanceTo(endLatLng); // Entfernung in Metern
 
-        // Anzahl der Segmente für die Interpolation (z.B. 10 für feineren Verlauf)
-        let segments = 10;
+        // Definiere die Anzahl der Segmente basierend auf der Distanz (z.B. 1 Segment pro 100 Meter)
+        let segments = Math.max(2, Math.floor(distance / 100)); // Mindestens 2 Segmente
 
         let segmentLatLngs = [];
         for (let j = 0; j <= segments; j++) {
@@ -182,7 +179,6 @@ function drawColoredLine() {
 
             if (j > 0) {
                 let color = interpolateColor(currentColor, nextColor, factor);
-                //console.log("color:", color);
 
                 // Zeichne die Linie für diesen Abschnitt
                 let segmentLine = L.polyline(
@@ -192,8 +188,6 @@ function drawColoredLine() {
                 appState.color_points.addLayer(segmentLine);
             }
         }
-
-  
     }
 
     map.addLayer(appState.color_points); // Den Layer der Karte hinzufügen
@@ -339,7 +333,7 @@ function startTracking() {
                         insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, values[0], values[1], values[2]);
                     });
                 }
-            }, 10000);  // Alle 10 Sekunden
+            }, 7000);  // Alle 10 Sekunden
 
             // Buttons umschalten
             $("#start").hide(); // Versteckt den "Start"-Button

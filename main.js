@@ -335,9 +335,9 @@ function startTracking() {
         }
 
         get_ri(appState.latLng) // hier RI-Wert anpassen oder berechnen
-        .then(ri_value => {
+        .then((ri_value, noise, distance) => {
 
-            insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, ri_value);
+            insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, ri_value, noise, distance);
 
             if (timer) {
                 clearInterval(timer);
@@ -347,8 +347,8 @@ function startTracking() {
                 if (appState.latLng && appState.time) {
                     
                     get_ri(appState.latLng) // hier RI-Wert anpassen oder berechnen
-                    .then(ri_value => {
-                        insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, ri_value);
+                    .then((ri_value, noise, distance) => {
+                        insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, ri_value, noise, distance);
                     });
                 }
             }, 10000);  // Alle 10 Sekunden
@@ -366,9 +366,9 @@ function startTracking() {
 function stopTracking() {
 
     get_ri(appState.latLng) // hier RI-Wert anpassen oder berechnen
-    .then(ri_value => {
+    .then((ri_value, noise, distance) => {
     // Letzten Punkt einfügen und nach Abschluss die Linie zeichnen
-        insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, ri_value)
+        insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, ri_value, noise, distance)
             .then(() => {
 
                 //Get point history
@@ -425,5 +425,5 @@ async function get_ri(latlng) {
     }
     // Ändern
     console.log("RI-Wert:", data.ri + data.noise + data.distance);
-    return (data.ri + data.noise + data.distance);
+    return (data.ri, data.noise, data.distance);
 }

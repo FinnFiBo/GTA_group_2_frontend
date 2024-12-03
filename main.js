@@ -130,12 +130,13 @@ function onload() {
 }
 
 function getColorByRI(riValue) {
-    if (riValue < 2) return [0, 0, 255];   // Blau
-    if (riValue < 4) return [0, 128, 0];   // Grün
-    if (riValue < 6) return [255, 255, 0]; // Gelb
-    if (riValue < 8) return [255, 165, 0]; // Orange
-    return [255, 0, 0];                    // Rot
+    if (riValue < 20) return [255, 0, 0];     // Rot
+    if (riValue < 40) return [255, 165, 0];   // Orange
+    if (riValue < 60) return [255, 255, 0];   // Gelb
+    if (riValue < 80) return [0, 128, 0];     // Grün
+    return [0, 0, 255];                      // Blau
 }
+
 
 function interpolateColor(rgb1, rgb2, factor) {
     const r = Math.round(rgb1[0] + factor * (rgb2[0] - rgb1[0]));
@@ -152,6 +153,7 @@ function drawColoredLine() {
 
     appState.color_points.clearLayers(); // Alte farbige Linien entfernen
     appState.points.clearLayers();
+    console.log(appState.points)
 
     for (let i = 0; i < appState.pointHistory.length - 1; i++) {
         let currentPoint = appState.pointHistory[i];

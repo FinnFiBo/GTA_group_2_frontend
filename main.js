@@ -302,7 +302,8 @@ function fetchHighestTripId(callback) {
                 console.error("Fehler beim Abrufen der höchsten Trip-ID:", data.error);
                 return;
             }
-            callback(data.highest_trip_id + 1); // Nächste aufsteigende Trip-ID
+            console.log("Höchste Trip-ID abgerufen:", data);
+            callback(data + 1); // Nächste aufsteigende Trip-ID
         })
         .catch(error => {
             console.error("Fehler beim Abrufen der höchsten Trip-ID:", error);

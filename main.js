@@ -150,10 +150,11 @@ function drawColoredLine() {
         return; // Es gibt keine Punkte, zwischen denen eine Linie gezeichnet werden kann
     }
 
+    console.log("Anzahl der Layer in points:", appState.points.getLayers().length);
     map.removeLayer(appState.points); 
     appState.points.clearLayers();   
     map.addLayer(appState.points); 
-
+    console.log("Anzahl der Layer in points:", appState.points.getLayers().length);
 
     for (let i = 0; i < appState.pointHistory.length - 1; i++) {
         let currentPoint = appState.pointHistory[i];

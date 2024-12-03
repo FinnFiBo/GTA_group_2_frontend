@@ -89,7 +89,7 @@ footer {
 
 #mean_ri {
     background-color: #4caf50;
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     font-size: 1.2em; 
     font-weight: bold; 
     font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
@@ -106,7 +106,7 @@ footer {
 }
 
 #mean_ri .mean-value {
-    color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
     font-weight: normal;
     margin-top: 5px;
     display: block;

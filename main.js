@@ -334,96 +334,96 @@ function startTracking() {
             map.setView(appState.latLng, 15); // Fokussiere und zoome auf Level 15
         }
 
-        let ri_value = get_ri(appState.latLng); // hier RI-Wert anpassen oder berechnen
+        get_ri(appState.latLng) // hier RI-Wert anpassen oder berechnen
+        .then(ri_value => {
 
-        insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, ri_value);
+            insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, ri_value);
 
-        if (timer) {
-            clearInterval(timer);
-            }
+            if (timer) {
+                clearInterval(timer);
+                }
 
-        timer = setInterval(() => {
-            if (appState.latLng && appState.time) {
-                
-                let ri_value = get_ri(appState.latLng); // hier RI-Wert anpassen oder berechnen
-    
-                insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, ri_value);
-            }
-        }, 10000);  // Alle 10 Sekunden
+            timer = setInterval(() => {
+                if (appState.latLng && appState.time) {
+                    
+                    get_ri(appState.latLng) // hier RI-Wert anpassen oder berechnen
+                    .then(ri_value => {
+                        insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, ri_value);
+                    });
+                }
+            }, 10000);  // Alle 10 Sekunden
 
-        // Buttons umschalten
-        $("#start").hide(); // Versteckt den "Start"-Button
-        $("#end").show();   // Zeigt den "End"-Button
-        $("#mean_ri").hide();
+            // Buttons umschalten
+            $("#start").hide(); // Versteckt den "Start"-Button
+            $("#end").show();   // Zeigt den "End"-Button
+            $("#mean_ri").hide();
+
+        });
     });
 }
 
 // Tracking stop
 function stopTracking() {
 
-    let ri_value = get_ri(appState.latLng); // hier RI-Wert anpassen oder berechnen
-
+    get_ri(appState.latLng) // hier RI-Wert anpassen oder berechnen
+    .then(ri_value => {
     // Letzten Punkt einfügen und nach Abschluss die Linie zeichnen
-    insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, ri_value)
-        .then(() => {
+        insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, ri_value)
+            .then(() => {
 
-            //Get point history
-            fetch(`${app_url}point_history?trip_id=${appState.trip_id}`, { method : "GET" })
-                .then(response => response.json())
-                .then(data => {
-                    console.log("Punkte abgerufen:", data);
-                    if (data.error) {
-                        console.error("Fehler beim Abrufen der Punkte:", data.error);
-                        return;
-                    }
-                    appState.pointHistory = data;
-                })
+                //Get point history
+                fetch(`${app_url}point_history?trip_id=${appState.trip_id}`, { method : "GET" })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("Punkte abgerufen:", data);
+                        if (data.error) {
+                            console.error("Fehler beim Abrufen der Punkte:", data.error);
+                            return;
+                        }
+                        appState.pointHistory = data;
+                    })
 
-            // drawColoredLine erst nach erfolgreichem Insert aufrufen
-            drawColoredLine();
+                // drawColoredLine erst nach erfolgreichem Insert aufrufen
+                drawColoredLine();
 
-            // Berechnung des Durchschnitts (mean_ri)
-            if (appState.pointHistory.length > 0) {
-                let mean_ri = appState.pointHistory.reduce((sum, point) => sum + (point.ri_value || 0), 0) / appState.pointHistory.length;
-                $("#mean_ri_value").text(mean_ri.toFixed(2));
-            } else {
-                $("#mean_ri_value").text("N/A");
-            }
+                // Berechnung des Durchschnitts (mean_ri)
+                if (appState.pointHistory.length > 0) {
+                    let mean_ri = appState.pointHistory.reduce((sum, point) => sum + (point.ri_value || 0), 0) / appState.pointHistory.length;
+                    $("#mean_ri_value").text(mean_ri.toFixed(2));
+                } else {
+                    $("#mean_ri_value").text("N/A");
+                }
 
-            // Buttons umschalten
-            $("#start").show(); // Zeigt den "Start"-Button
-            $("#end").hide();   // Versteckt den "End"-Button
-            $("#mean_ri").show();
-        })
-        .catch(error => {
-            console.error("Fehler beim Stop-Tracking:", error);
-        });
+                // Buttons umschalten
+                $("#start").show(); // Zeigt den "Start"-Button
+                $("#end").hide();   // Versteckt den "End"-Button
+                $("#mean_ri").show();
+            })
+            .catch(error => {
+                console.error("Fehler beim Stop-Tracking:", error);
+            });
 
-    clearInterval(timer);
-    timer = null;
-    appState.isTracking = false;
+        clearInterval(timer);
+        timer = null;
+        appState.isTracking = false;
+    });
 }
 
 // Berechnung des RI-Wertes
-function get_ri(latlng) {
+async function get_ri(latlng) {
     let lat = latlng.lat;
     let lng = latlng.lng;
     // Hier RI-Wert anpassen oder berechnen
-    fetch(`${app_url}calculate_ri?lat=${lat}&lng=${lng}`, { 
+    const response = await fetch(`${app_url}calculate_ri?lat=${lat}&lng=${lng}`, { 
         method: "GET", 
     })
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                console.error("Fehler beim Berechnen des RI-Wertes:", data.error);
-                return;
-            }
-            // Ändern, so dass man die Layer aussuchen kann
-            console.log("RI-Wert:", data.ri + data.noise + data.distance);
-            return (data.ri + data.noise + data.distance);
-        })
-        .catch(error => {
-            console.error("Error: Fehler beim Berechnen des RI-Wertes:", error);
-            return 7; // Fallback auf 7, falls ein Fehler auftritt
-        });
+    const data = await response.json();
+
+    if (data.error) {
+        console.error("Fehler beim Berechnen des RI-Wertes:", data.error);
+        return 7; // Fallback auf 7, falls ein Fehler auftritt
+    }
+    // Ändern
+    console.log("RI-Wert:", data.ri + data.noise + data.distance);
+    return (data.ri + data.noise + data.distance);
 }

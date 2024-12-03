@@ -426,5 +426,5 @@ async function get_ri(latlng) {
     }
     // Ändern
     console.log("RI-Wert:", data.ri, data.noise, data.distance);
-    return (data.ri, data.noise, data.distance);
+    return [data.ri, data.noise, data.distance];
 }

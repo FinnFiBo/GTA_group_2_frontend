@@ -391,7 +391,7 @@ function stopTracking() {
         .then(() => {
 
             //Get point history
-            fetch(`${app_url}/point_history?trip_id=${appState.trip_id}`, { method : "GET" })
+            fetch(`${app_url}point_history?trip_id=${appState.trip_id}`, { method : "GET" })
                 .then(response => response.json())
                 .then(data => {
                     console.log("Punkte abgerufen:", data);

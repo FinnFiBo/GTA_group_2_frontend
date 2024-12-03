@@ -200,7 +200,7 @@ function drawColoredLine() {
             fillOpacity: 0.8
         }).bindPopup(`RI: ${currentPoint.ri_value}`);
         appState.color_points.addLayer(startPointMarker);
-        
+
 
         // Markiere den Endpunkt (als separate Markierung oder Teil der nächsten Iteration)
         if (i === appState.pointHistory.length - 2) {
@@ -374,6 +374,10 @@ function stopTracking() {
     // Letzten Punkt einfügen und nach Abschluss die Linie zeichnen
         insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, values[0], values[1], values[2])
             .then(() => {
+
+                map.removeLayer(appState.points); 
+                appState.points.clearLayers();   
+                map.addLayer(appState.points); 
 
                 //Get point history
                 fetch(`${app_url}point_history?trip_id=${appState.trip_id}`, { method : "GET" })

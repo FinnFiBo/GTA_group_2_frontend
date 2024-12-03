@@ -219,6 +219,7 @@ function drawColoredLine() {
 // REF: https://github.com/Georepublic/leaflet-wfs/blob/master/index.html#L201
 function insertPoint(lat, lng, time, trip_id, ri_value, noise, distance) {
     return new Promise((resolve, reject) => {
+    console.log("Inserting point:", lat, lng, time, trip_id, ri_value);
 	let postData = `<wfs:Transaction
 			  service="WFS"
 			  version="1.0.0"
@@ -302,7 +303,6 @@ function fetchHighestTripId(callback) {
                 console.error("Fehler beim Abrufen der höchsten Trip-ID:", data.error);
                 return;
             }
-            console.log("Höchste Trip-ID abgerufen:", data[0][0]);
             callback(data[0][0] + 1); // Nächste aufsteigende Trip-ID
         })
         .catch(error => {

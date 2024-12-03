@@ -151,8 +151,10 @@ function drawColoredLine() {
         return; // Es gibt keine Punkte, zwischen denen eine Linie gezeichnet werden kann
     }
 
+    console.log(appState.points)
     appState.color_points.clearLayers(); // Alte farbige Linien entfernen
     appState.points.clearLayers();
+    console.log(appState.points)
 
     for (let i = 0; i < appState.pointHistory.length - 1; i++) {
         let currentPoint = appState.pointHistory[i];

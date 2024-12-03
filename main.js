@@ -295,44 +295,19 @@ function insertPoint(lat, lng, time, trip_id, ri_value, noise, distance) {
 }
 
 function fetchHighestTripId(callback) {
-    let query = `
-        <wfs:GetFeature 
-            service="WFS" 
-            version="1.1.0" 
-            outputFormat="application/json" 
-            xmlns:wfs="http://www.opengis.net/wfs" 
-            xmlns:ogc="http://www.opengis.net/ogc">
-            <wfs:Query typeName="GTA24_lab06:webapp_trajectory_point" srsName="EPSG:4326">
-                <ogc:SortBy>
-                    <ogc:SortProperty>
-                        <ogc:PropertyName>trip_id</ogc:PropertyName>
-                        <ogc:SortOrder>DESC</ogc:SortOrder>
-                    </ogc:SortProperty>
-                </ogc:SortBy>
-                <ogc:MaxFeatures>1</ogc:MaxFeatures>
-            </wfs:Query>
-        </wfs:GetFeature>
-    `;
-
-    $.ajax({
-        method: "POST",
-        url: wfs,
-        contentType: "text/xml",
-        dataType: "json",
-        data: query,
-        success: function (data) {
-            let highestTripId = 0;
-            if (data.features && data.features.length > 0) {
-                highestTripId = parseInt(data.features[0].properties.trip_id, 10);
+    fetch(`${app_url}highest_trip_id`, { method: "GET" })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                console.error("Fehler beim Abrufen der höchsten Trip-ID:", data.error);
+                return;
             }
-            console.log("Höchste Trip-ID:", highestTripId);
-            callback(highestTripId + 1); // Nächste aufsteigende Trip-ID
-        },
-        error: function (xhr, status, error) {
+            callback(data.highest_trip_id + 1); // Nächste aufsteigende Trip-ID
+        })
+        .catch(error => {
             console.error("Fehler beim Abrufen der höchsten Trip-ID:", error);
-            callback(1); // Fallback auf 1, falls es keine Einträge gibt.
-        }
-    });
+            callback(1); // Fallback auf 1, falls ein Fehler auftritt
+        });
 }
 
 

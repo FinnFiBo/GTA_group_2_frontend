@@ -309,7 +309,21 @@ function startTracking() {
             errMsg.show();
             return; //  Funktion abbrechen
         }
-        
+        // Position prüfen
+        const maxAccuracy = 50; // Maximale zulässige Ungenauigkeit in Metern
+        if (!appState.latLng || !checkPositionAccuracy(appState.latLng, maxAccuracy)) {
+            // Fehlernachricht anzeigen
+            let errMsg = $("#error-messages");
+            errMsg.text("Bitte warten Sie, bis Ihre Position genau genug ist.");
+            errMsg.show();
+
+            // Versuchen, Position erneut zu ermitteln
+            setTimeout(() => {
+                startTracking(); // Funktion nach kurzer Wartezeit erneut ausführen
+            }, 5000); // 5 Sekunden warten
+            return; // Funktion abbrechen
+        }
+
         if (map && appState.latLng) {
             map.setView(appState.latLng, 15); // Fokussiere und zoome auf Level 15
         }
@@ -334,7 +348,7 @@ function startTracking() {
                         insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, values[0], values[1], values[2]);
                     });
                 }
-            }, 7000);  // Alle 10 Sekunden
+            }, 8000);  // Alle 10 Sekunden
 
             // Buttons umschalten
             $("#start").hide(); // Versteckt den "Start"-Button
@@ -409,4 +423,11 @@ async function get_ri(latlng) {
     // Ändern
     console.log("RI-Wert:", data.ri, data.noise, data.distance);
     return [data.ri, data.noise, data.distance];
+}
+
+function checkPositionAccuracy(latLng, maxAccuracy) {
+    if (!latLng || !latLng.accuracy || latLng.accuracy > maxAccuracy) {
+        return false; // Position ist nicht genau genug
+    }
+    return true;
 }

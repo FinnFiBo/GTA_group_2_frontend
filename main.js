@@ -348,6 +348,7 @@ function startTracking() {
                     
                     get_ri(appState.latLng) // hier RI-Wert anpassen oder berechnen
                     .then(values => {
+                        console.log("RI-Werte:", values);
                         insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, values[0], values[1], values[2]);
                     });
                 }
@@ -424,6 +425,6 @@ async function get_ri(latlng) {
         return 7; // Fallback auf 7, falls ein Fehler auftritt
     }
     // Ändern
-    console.log("RI-Wert:", data.ri + data.noise + data.distance);
+    console.log("RI-Wert:", data.ri, data.noise, data.distance);
     return (data.ri, data.noise, data.distance);
 }

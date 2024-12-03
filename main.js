@@ -219,7 +219,7 @@ function drawColoredLine() {
 // REF: https://github.com/Georepublic/leaflet-wfs/blob/master/index.html#L201
 function insertPoint(lat, lng, time, trip_id, ri_value, noise, distance) {
     return new Promise((resolve, reject) => {
-    console.log("Inserting point:", lat, lng, time, trip_id, ri_value);
+    console.log("Inserting point:", lat, lng, time, trip_id, ri_value, noise, distance);
 	let postData = `<wfs:Transaction
 			  service="WFS"
 			  version="1.0.0"
@@ -335,9 +335,9 @@ function startTracking() {
         }
 
         get_ri(appState.latLng) // hier RI-Wert anpassen oder berechnen
-        .then((ri_value, noise, distance) => {
+        .then(values => {
 
-            insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, ri_value, noise, distance);
+            insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, values[0], values[1], values[2]);
 
             if (timer) {
                 clearInterval(timer);
@@ -347,8 +347,8 @@ function startTracking() {
                 if (appState.latLng && appState.time) {
                     
                     get_ri(appState.latLng) // hier RI-Wert anpassen oder berechnen
-                    .then((ri_value, noise, distance) => {
-                        insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, ri_value, noise, distance);
+                    .then(values => {
+                        insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, values[0], values[1], values[2]);
                     });
                 }
             }, 10000);  // Alle 10 Sekunden
@@ -366,9 +366,9 @@ function startTracking() {
 function stopTracking() {
 
     get_ri(appState.latLng) // hier RI-Wert anpassen oder berechnen
-    .then((ri_value, noise, distance) => {
+    .then(values => {
     // Letzten Punkt einfügen und nach Abschluss die Linie zeichnen
-        insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, ri_value, noise, distance)
+        insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, values[0], values[1], values[2])
             .then(() => {
 
                 //Get point history

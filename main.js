@@ -325,6 +325,7 @@ function fetchHighestTripId(callback) {
             if (data.features && data.features.length > 0) {
                 highestTripId = parseInt(data.features[0].properties.trip_id, 10);
             }
+            console.log("Höchste Trip-ID:", highestTripId);
             callback(highestTripId + 1); // Nächste aufsteigende Trip-ID
         },
         error: function (xhr, status, error) {

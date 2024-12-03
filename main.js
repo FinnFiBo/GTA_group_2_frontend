@@ -193,26 +193,7 @@ function drawColoredLine() {
             }
         }
 
-        // Markiere den Startpunkt mit seiner Farbe
-        let startPointMarker = L.circleMarker([currentPoint.lat, currentPoint.lng], {
-            radius: 2,
-            color: currentColor,
-            fillColor: currentColor,
-            fillOpacity: 0.8
-        }).bindPopup(`RI: ${currentPoint.ri_value}`);
-        appState.color_points.addLayer(startPointMarker);
-
-
-        // Markiere den Endpunkt (als separate Markierung oder Teil der nächsten Iteration)
-        if (i === appState.pointHistory.length - 2) {
-            let endPointMarker = L.circleMarker([nextPoint.lat, nextPoint.lng], {
-                radius: 2,
-                color: nextColor,
-                fillColor: nextColor,
-                fillOpacity: 0.8
-            }).bindPopup(`RI: ${nextPoint.ri_value}`);
-            appState.color_points.addLayer(endPointMarker);
-        }
+  
     }
 
     map.addLayer(appState.color_points); // Den Layer der Karte hinzufügen

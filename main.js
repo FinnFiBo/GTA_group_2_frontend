@@ -149,7 +149,7 @@ function drawColoredLine() {
     if (appState.pointHistory.length < 2) {
         return; // Es gibt keine Punkte, zwischen denen eine Linie gezeichnet werden kann
     }
-
+   
     map.removeLayer(appState.points); 
     appState.points.clearLayers();   
     map.addLayer(appState.points); 
@@ -162,13 +162,8 @@ function drawColoredLine() {
         let currentColor = getColorByRI(currentPoint.ri_value || 5);
         let nextColor = getColorByRI(nextPoint.ri_value || 5);
 
-        // Berechne die Distanz zwischen den Punkten
-        let startLatLng = L.latLng(currentPoint.lat, currentPoint.lng);
-        let endLatLng = L.latLng(nextPoint.lat, nextPoint.lng);
-        let distance = startLatLng.distanceTo(endLatLng); // Entfernung in Metern
-
-        // Definiere die Anzahl der Segmente basierend auf der Distanz (z.B. 1 Segment pro 100 Meter)
-        let segments = Math.max(2, Math.floor(distance / 100)); // Mindestens 2 Segmente
+        // Anzahl der Segmente für die Interpolation (z.B. 10 für feineren Verlauf)
+        let segments = 10;
 
         let segmentLatLngs = [];
         for (let j = 0; j <= segments; j++) {

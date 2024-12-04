@@ -314,7 +314,8 @@ function startTracking() {
             map.setView(appState.latLng, 15); // Fokussiere und zoome auf Level 15
         }
 
-        appState.color_points.clearLayers(); 
+        appState.color_points.clearLayers();
+        $(".legend").hide();
 
         get_ri(appState.latLng) // hier RI-Wert anpassen oder berechnen
         .then(values => {
@@ -381,6 +382,8 @@ function stopTracking() {
                 $("#start").show(); // Zeigt den "Start"-Button
                 $("#end").hide();   // Versteckt den "End"-Button
                 $("#mean_ri").show();
+                $(".legend").show();
+                
             })
             .catch(error => {
                 console.error("Fehler beim Stop-Tracking:", error);

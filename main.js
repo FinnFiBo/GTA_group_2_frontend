@@ -123,8 +123,6 @@ function onload() {
         appState.currentZoom = map.getZoom(); // Aktuellen Zoom speichern
     });
 
-    $(".legend").show();
-
 	// Button-Event-Handler registrieren
 	$("#start").click(startTracking);
     $("#end").click(stopTracking).hide(); // End-Button zu Beginn verstecken

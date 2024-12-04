@@ -123,10 +123,11 @@ function onload() {
         appState.currentZoom = map.getZoom(); // Aktuellen Zoom speichern
     });
 
-	// Button-Event-Handler registrieren
+    // Button-Event-Handler registrieren
 	$("#start").click(startTracking);
     $("#end").click(stopTracking).hide(); // End-Button zu Beginn verstecken
     $("#mean_ri").hide();
+    $(".legend").hide();
 }
 
 function getColorByRI(riValue) {

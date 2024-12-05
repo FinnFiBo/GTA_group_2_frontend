@@ -439,8 +439,8 @@ function login() {
         appState.isLoggingIn = false;
     }, 3000);
 
-    let username = document.getElementById("loginUsername").value;
-    let password = hashPassword(document.getElementById("loginPassword").value);
+    let username = document.getElementById("login-username").value;
+    let password = hashPassword(document.getElementById("login-password").value);
 
     fetch(`${app_url}login?username=${username}&password=${password}`, {
         method: "GET",
@@ -454,11 +454,10 @@ function login() {
 
         console.log("Erfolgreich eingeloggt:", data);
         appState.user = data;
-        document.getElementById("loginUsername").value = "";
-        document.getElementById("loginPassword").value = "";
+        document.getElementById("login-username").value = "";
+        document.getElementById("login-password").value = "";
 
-        document.getElementById("loginScreen").style.display = "none";
-        document.getElementById("WebApp").style.display = "flex";
+        document.getElementById("auth-container").style.display = "none";
 
         onload_map();
     })
@@ -475,8 +474,8 @@ function register() {
             appState.isRegistering = false;
         }, 3000);
     
-        let username = document.getElementById("registerUsername").value;
-        let password = hashPassword(document.getElementById("registerPassword").value);
+        let username = document.getElementById("register-username").value;
+        let password = hashPassword(document.getElementById("register-password").value);
     
         fetch(`${app_url}register?username=${username}&password=${password}`, {
             method: "GET",
@@ -490,11 +489,10 @@ function register() {
     
             console.log("Erfolgreich registriert:", data);
             appState.user = data.user;
-            document.getElementById("registerUsername").value = "";
-            document.getElementById("registerPassword").value = "";
+            document.getElementById("register-username").value = "";
+            document.getElementById("register-password").value = "";
     
-            document.getElementById("loginScreen").style.display = "none";
-            document.getElementById("WebApp").style.display = "flex";
+            document.getElementById("auth-container").style.display = "none";
     
             onload_map();
         })

@@ -445,7 +445,7 @@ function login() {
         document.getElementById("loginPassword").value = "";
 
         document.getElementById("loginScreen").style.display = "none";
-        document.getElementById("WebApp").style.display = "block";
+        document.getElementById("WebApp").style.display = "flex";
 
         onload_map();
     })
@@ -481,7 +481,7 @@ function register() {
             document.getElementById("registerPassword").value = "";
     
             document.getElementById("loginScreen").style.display = "none";
-            document.getElementById("WebApp").style.display = "block";
+            document.getElementById("WebApp").style.display = "flex";
     
             onload_map();
         })

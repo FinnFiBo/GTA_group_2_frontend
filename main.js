@@ -486,6 +486,27 @@ function register() {
             onload_map();
         })
 }
+document.getElementById("login-form").addEventListener("submit", function(event) {
+    event.preventDefault();
+    login();
+});
+
+document.getElementById("register-form").addEventListener("submit", function(event) {
+    event.preventDefault();
+    register();
+});
+
+document.getElementById("show-register").addEventListener("click", function(event) {
+    event.preventDefault();
+    document.querySelectorAll(".auth-form")[0].style.display = "none";
+    document.querySelectorAll(".auth-form")[1].style.display = "block";
+});
+
+document.getElementById("show-login").addEventListener("click", function(event) {
+    event.preventDefault();
+    document.querySelectorAll(".auth-form")[1].style.display = "none";
+    document.querySelectorAll(".auth-form")[0].style.display = "block";
+});
 
 function hashPassword(password) {
     let hash = 0;

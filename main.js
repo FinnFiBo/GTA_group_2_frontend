@@ -87,7 +87,7 @@ let geoOptions = {
 /**
  * The onload function is called when the HTML has finished loading.
  */
-function onload_map() {
+function onload() {
     let errMsg = $("#error-messages");
 
     if ("geolocation" in navigator) {

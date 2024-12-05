@@ -311,10 +311,25 @@ function fetchHighestTripId(callback) {
 function startTracking() {
 
     console.log("Start tracking", appState.user);
+    user_id = appState.user[0];
 
     // Abrufen der nächsten Trip-ID
     fetchHighestTripId(function (nextTripId) {
         appState.trip_id = nextTripId; // Nächste aufsteigende Trip-ID
+
+        // Trip in der Datenbank anlegen
+        fetch(`${app_url}insert_trip?user_id=${user_id}&trip_id=${appState.trip_id}`, { method: "GET" })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    console.error("Fehler beim Anlegen des Trips:", data.error);
+                    return;
+                }
+                console.log("Trip erfolgreich angelegt:", data);
+            })
+            .catch(error => {
+                console.error("Fehler beim Anlegen des Trips:", error);
+            });
 
         appState.pointHistory = [];
         appState.isTracking = true;

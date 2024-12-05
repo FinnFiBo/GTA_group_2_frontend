@@ -129,6 +129,19 @@ function onload() {
     $("#end").click(stopTracking).hide(); // End-Button zu Beginn verstecken
     $("#mean_ri").hide();
     $(".legend").hide();
+
+    // Authentifizierung
+    document.getElementById("show-register").addEventListener("click", function(event) {
+        event.preventDefault();
+        document.querySelectorAll(".auth-form")[0].style.display = "none";
+        document.querySelectorAll(".auth-form")[1].style.display = "block";
+    });
+
+    document.getElementById("show-login").addEventListener("click", function(event) {
+        event.preventDefault();
+        document.querySelectorAll(".auth-form")[1].style.display = "none";
+        document.querySelectorAll(".auth-form")[0].style.display = "block";
+    });
 }
 
 function getColorByRI(riValue) {
@@ -486,18 +499,6 @@ function register() {
             onload_map();
         })
 }
-
-document.getElementById("show-register").addEventListener("click", function(event) {
-    event.preventDefault();
-    document.querySelectorAll(".auth-form")[0].style.display = "none";
-    document.querySelectorAll(".auth-form")[1].style.display = "block";
-});
-
-document.getElementById("show-login").addEventListener("click", function(event) {
-    event.preventDefault();
-    document.querySelectorAll(".auth-form")[1].style.display = "none";
-    document.querySelectorAll(".auth-form")[0].style.display = "block";
-});
 
 function hashPassword(password) {
     let hash = 0;

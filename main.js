@@ -1,5 +1,6 @@
 let map;
 let appState = {
+    user: null,
     markers: null,
     latLng: null,
     radius: null,
@@ -413,4 +414,79 @@ async function get_ri(latlng) {
     // Ändern
     console.log("RI-Wert:", data.ri, data.noise, data.distance);
     return [data.ri, data.noise, data.distance];
+}
+
+function login() {
+
+    if (appState.isLoggingIn) {
+        return;
+    }
+    appState.isLoggingIn = true;
+    setTimeout(() => {
+        appState.isLoggingIn = false;
+    }, 3000);
+
+    let username = document.getElementById("loginUsername").value;
+    let password = hashPassword(document.getElementById("loginPassword").value);
+
+    fetch(`${app_url}login?username=${username}&password=${password}`, {
+        method: "GET",
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            console.error("Fehler beim Einloggen:", data.error);
+            return;
+        }
+
+        console.log("Erfolgreich eingeloggt:", data);
+        appState.user = data;
+        document.getElementById("loginUsername").value = "";
+        document.getElementById("loginPassword").value = "";
+
+        document.getElementById("loginScreen").style.display = "none";
+        document.getElementById("WebApp").style.display = "block";
+
+        onload();
+    })
+
+}
+
+function register() {
+    
+        if (appState.isRegistering) {
+            return;
+        }
+        appState.isRegistering = true;
+        setTimeout(() => {
+            appState.isRegistering = false;
+        }, 3000);
+    
+        let username = document.getElementById("registerUsername").value;
+        let password = hashPassword(document.getElementById("registerPassword").value);
+    
+        fetch(`${app_url}register?username=${username}&password=${password}`, {
+            method: "GET",
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                console.error("Fehler beim Registrieren:", data.error);
+                return;
+            }
+    
+            console.log("Erfolgreich registriert:", data);
+            appState.user = data;
+            document.getElementById("registerUsername").value = "";
+            document.getElementById("registerPassword").value = "";
+    
+            document.getElementById("registerScreen").style.display = "none";
+            document.getElementById("WebApp").style.display = "block";
+    
+            onload();
+        })
+}
+
+function hashPassword(password) {
+    return CryptoJS.SHA256(password).toString();
 }

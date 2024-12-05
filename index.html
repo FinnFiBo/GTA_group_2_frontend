@@ -26,44 +26,74 @@
 
 </head>
 
-<body onload = "onload()">
-    <h1>Recreational Index</h1>
+<body>
 
-    <div id="buttons-container">
-        <button id="start">Start</button>
-        <div id="mean_ri">
-            <span class="mean-text">Mean RI</span>
-            <span id="mean_ri_value" class="mean-value">0</span>
+    <div id="loginScreen">
+
+        <h1>Login</h1>
+        <form id="loginForm" onsubmit="login(); return false">
+            <label for="loginUsername">Name:</label>
+            <input type="text" id="loginUsername" name="username" required>
+            <br>
+            <label for="loginPassword">Passwort:</label>
+            <input type="password" id="loginPassword" name="password" required>
+            <br>
+            <button type="submit" onclick="login()">Login</button>
+        </form>
+        
+        <h1>Registrieren</h1>
+        <form id="registerForm" onsubmit="register(); return false;"></form>
+            <label for="registerUsername">Name:</label>
+            <input type="text" id="registerUsername" name="username" required>
+            <br>
+            <label for="registerPassword">Passwort:</label>
+            <input type="password" id="registerPassword" name="password" required>
+            <br>
+            <button type="button" onclick="register()">Registrieren</button>
+        </form>
+    </div>
+
+
+    <div id="WebApp", style="display: none;">
+        <h1>Recreational Index</h1>
+
+        <div id="buttons-container">
+            <button id="start">Start</button>
+            <div id="mean_ri">
+                <span class="mean-text">Mean RI</span>
+                <span id="mean_ri_value" class="mean-value">0</span>
+            </div>
+            <button id="end">End</button>
         </div>
-        <button id="end">End</button>
-    </div>
-    
-    <div class="content">
-        <div id="map"></div>
-    </div>
-
-    <div class="legend">
-        <h4>Farbskala</h4>
-        <div><span style="background: rgb(255, 0, 0);"></span> 10 </div>
-        <div><span style="background: rgb(255, 69, 0);"></span> 10–19 </div>
-        <div><span style="background: rgb(255, 140, 0);"></span> 20–29 </div>
-        <div><span style="background: rgb(255, 165, 0);"></span> 30–39 </div>
-        <div><span style="background: rgb(255, 215, 0);"></span> 40–49 </div>
-        <div><span style="background: rgb(255, 255, 0);"></span> 50–59 </div>
-        <div><span style="background: rgb(173, 255, 47);"></span> 60–69 </div>
-        <div><span style="background: rgb(0, 128, 0);"></span> 70–79 </div>
-        <div><span style="background: rgb(0, 191, 255);"></span> 80–89 </div>
-        <div><span style="background: rgb(0, 0, 255);"></span> 90–99 </div>
-        <div><span style="background: rgb(75, 0, 130);"></span> ≥100 </div>
-    </div>
-
-    <footer>
-        <div>
-            &copy; Gruppe 2<br>
-            Finn Bogatu, Rhéa Ehrle, Robin Holdener, Sara Bachmann <br>
-            IKG @ ETH Zürich
+        
+        <div class="content">
+            <div id="map"></div>
         </div>
-    </footer>
+
+        <div class="legend">
+            <h4>Farbskala</h4>
+            <div><span style="background: rgb(255, 0, 0);"></span> 10 </div>
+            <div><span style="background: rgb(255, 69, 0);"></span> 10–19 </div>
+            <div><span style="background: rgb(255, 140, 0);"></span> 20–29 </div>
+            <div><span style="background: rgb(255, 165, 0);"></span> 30–39 </div>
+            <div><span style="background: rgb(255, 215, 0);"></span> 40–49 </div>
+            <div><span style="background: rgb(255, 255, 0);"></span> 50–59 </div>
+            <div><span style="background: rgb(173, 255, 47);"></span> 60–69 </div>
+            <div><span style="background: rgb(0, 128, 0);"></span> 70–79 </div>
+            <div><span style="background: rgb(0, 191, 255);"></span> 80–89 </div>
+            <div><span style="background: rgb(0, 0, 255);"></span> 90–99 </div>
+            <div><span style="background: rgb(75, 0, 130);"></span> ≥100 </div>
+        </div>
+
+        <footer>
+            <div>
+                &copy; Gruppe 2<br>
+                Finn Bogatu, Rhéa Ehrle, Robin Holdener, Sara Bachmann <br>
+                IKG @ ETH Zürich
+            </div>
+        </footer>
+
+    </div>
 
 </body>
 </html>

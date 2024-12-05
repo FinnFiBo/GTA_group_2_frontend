@@ -458,8 +458,6 @@ function login() {
         document.getElementById("login-password").value = "";
 
         document.getElementById("auth-container").style.display = "none";
-
-        onload_map();
     })
 
 }
@@ -493,8 +491,6 @@ function register() {
             document.getElementById("register-password").value = "";
     
             document.getElementById("auth-container").style.display = "none";
-    
-            onload_map();
         })
 }
 

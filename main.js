@@ -310,6 +310,8 @@ function fetchHighestTripId(callback) {
 // Tracking start
 function startTracking() {
 
+    console.log("Start tracking", appState.user);
+
     // Abrufen der nächsten Trip-ID
     fetchHighestTripId(function (nextTripId) {
         appState.trip_id = nextTripId; // Nächste aufsteigende Trip-ID

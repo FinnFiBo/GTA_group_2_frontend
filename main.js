@@ -486,15 +486,6 @@ function register() {
             onload_map();
         })
 }
-document.getElementById("login-form").addEventListener("submit", function(event) {
-    event.preventDefault();
-    login();
-});
-
-document.getElementById("register-form").addEventListener("submit", function(event) {
-    event.preventDefault();
-    register();
-});
 
 document.getElementById("show-register").addEventListener("click", function(event) {
     event.preventDefault();

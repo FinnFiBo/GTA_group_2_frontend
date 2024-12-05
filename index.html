@@ -31,23 +31,23 @@
     <div id="auth-container" class="auth-overlay">
         <div class="auth-form">
             <h2>Login</h2>
-            <form id="login-form">
+            <form id="login-form" onsubmit="login(); return false;"></form>
                 <label for="login-username">Username:</label>
                 <input type="text" id="login-username" name="username" required>
                 <label for="login-password">Password:</label>
                 <input type="password" id="login-password" name="password" required>
-                <button type="submit">Login</button>
+                <button type="submit" onclick="login()">Login</button>
             </form>
             <p>Don't have an account? <a href="#" id="show-register">Register here</a></p>
         </div>
         <div class="auth-form" style="display: none;">
             <h2>Register</h2>
-            <form id="register-form">
+            <form id="register-form" onsubmit="register(); return false;">
                 <label for="register-username">Username:</label>
                 <input type="text" id="register-username" name="username" required>
                 <label for="register-password">Password:</label>
                 <input type="password" id="register-password" name="password" required>
-                <button type="submit">Register</button>
+                <button type="submit" onclick="register()">Register</button>
             </form>
             <p>Already have an account? <a href="#" id="show-login">Login here</a></p>
         </div>

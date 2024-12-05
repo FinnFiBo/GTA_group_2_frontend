@@ -27,33 +27,6 @@
 </head>
 
 <body onload="onload_map()">
-
-    <div id="loginScreen", style="display: none;">
-
-        <h1>Login</h1>
-        <form id="loginForm" onsubmit="login(); return false">
-            <label for="loginUsername">Name:</label>
-            <input type="text" id="loginUsername" name="username" required>
-            <br>
-            <label for="loginPassword">Passwort:</label>
-            <input type="password" id="loginPassword" name="password" required>
-            <br>
-            <button type="submit" onclick="login()">Login</button>
-        </form>
-        
-        <h1>Registrieren</h1>
-        <form id="registerForm" onsubmit="register(); return false;"></form>
-            <label for="registerUsername">Name:</label>
-            <input type="text" id="registerUsername" name="username" required>
-            <br>
-            <label for="registerPassword">Passwort:</label>
-            <input type="password" id="registerPassword" name="password" required>
-            <br>
-            <button type="button" onclick="register()">Registrieren</button>
-        </form>
-    </div>
-
-
     <div id="WebApp">
         <h1>Recreational Index</h1>
 

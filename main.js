@@ -476,7 +476,7 @@ function register() {
             }
     
             console.log("Erfolgreich registriert:", data);
-            appState.user = data;
+            appState.user = data.user;
             document.getElementById("registerUsername").value = "";
             document.getElementById("registerPassword").value = "";
     

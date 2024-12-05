@@ -480,7 +480,7 @@ function register() {
             document.getElementById("registerUsername").value = "";
             document.getElementById("registerPassword").value = "";
     
-            document.getElementById("registerScreen").style.display = "none";
+            document.getElementById("loginScreen").style.display = "none";
             document.getElementById("WebApp").style.display = "block";
     
             onload();

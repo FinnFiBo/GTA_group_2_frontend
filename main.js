@@ -87,7 +87,7 @@ let geoOptions = {
 /**
  * The onload function is called when the HTML has finished loading.
  */
-function onload() {
+function onload_map() {
     let errMsg = $("#error-messages");
 
     if ("geolocation" in navigator) {
@@ -447,7 +447,7 @@ function login() {
         document.getElementById("loginScreen").style.display = "none";
         document.getElementById("WebApp").style.display = "block";
 
-        onload();
+        onload_map();
     })
 
 }
@@ -483,7 +483,7 @@ function register() {
             document.getElementById("loginScreen").style.display = "none";
             document.getElementById("WebApp").style.display = "block";
     
-            onload();
+            onload_map();
         })
 }
 

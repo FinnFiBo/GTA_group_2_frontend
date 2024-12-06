@@ -310,10 +310,14 @@ function fetchHighestTripId(callback) {
 // Tracking start
 function startTracking() {
 
-    // Buttons umschalten
-    $("#start").hide(); // Versteckt den "Start"-Button
-    $("#end").show();   // Zeigt den "End"-Button
+    if (appState.isTracking) {
+        return;
+    }
+ 
+    $("#start").hide(); 
+    $("#end").show();  
     $("#mean_ri").hide();
+    $(".legend").hide();
 
     console.log("Start tracking", appState.user);
     user_id = appState.user[0];
@@ -352,8 +356,7 @@ function startTracking() {
         }
 
         appState.color_points.clearLayers();
-        $(".legend").hide();
-
+        
         get_ri(appState.latLng) // hier RI-Wert anpassen oder berechnen
         .then(values => {
 

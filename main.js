@@ -524,3 +524,11 @@ function hashPassword(password) {
     }
     return hash.toString();
 }
+
+
+function toggleTooltip() {
+    const tooltip = document.querySelector('.tooltip'); // Wählt den Tooltip aus
+    if (tooltip) {
+        tooltip.classList.toggle('visible'); // Zeigt oder versteckt den Tooltip
+    }
+}

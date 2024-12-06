@@ -95,6 +95,11 @@ footer {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+#buttons-container #end {
+    background-color: darkgreen;
+    color: white;
+}
+
 #mean_ri {
     background-color: #4caf50;
     color: rgb(0, 0, 0);

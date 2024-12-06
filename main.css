@@ -256,3 +256,54 @@ footer {
 .auth-form a:hover {
     text-decoration: underline;
 }
+
+.info-button-container {
+    position: relative;
+    display: inline-block;
+}
+
+.info-button {
+    background-color: #007bff; /* Blau */
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.info-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+}
+
+.tooltip {
+    visibility: hidden;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 12px;
+    position: absolute;
+    bottom: 40px; /* Position oberhalb des Buttons */
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    opacity: 0;
+    transition: visibility 0.2s, opacity 0.2s ease-in-out;
+}
+
+.info-button:hover + .tooltip,
+.info-button:focus + .tooltip {
+    visibility: visible;
+    opacity: 1;
+}

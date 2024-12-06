@@ -146,14 +146,14 @@ footer {
 }
 
 .gradient-container {
-    display: flex; /* Horizontale Anordnung von Balken und Labels */
-    align-items: center; /* Vertikale Ausrichtung */
-    gap: 10px; /* Abstand zwischen Farbverlauf und Labels */
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .gradient-bar {
-    width: 20px; /* Schmale Breite für vertikalen Verlauf */
-    height: 300px; /* Länge des Balkens */
+    width: 20px;
+    height: 300px;
     background: linear-gradient(to bottom, 
         rgb(255, 0, 0),        /* 10 */
         rgb(255, 69, 0),       /* 10–19 */
@@ -173,14 +173,14 @@ footer {
 
 .labels {
     display: flex;
-    flex-direction: column; /* Vertikale Ausrichtung */
-    justify-content: space-between; /* Gleichmäßige Verteilung */
-    height: 300px; /* Höhe der Labels passt zur Höhe des Farbverlaufs */
+    flex-direction: column; 
+    justify-content: space-between; 
+    height: 300px; 
 }
 
 .labels span {
     font-size: 12px;
-    text-align: left; /* Links ausgerichtet */
+    text-align: left;
 }
 
 .auth-overlay {
@@ -296,14 +296,14 @@ footer {
 
 .tooltip {
     visibility: hidden;
-    background-color: #333;
-    color: #fff;
+    background-color: #4caf50; 
+    color: white;
     text-align: left;
     border-radius: 5px;
-    padding: 8px;
-    font-size: 12px;
+    padding: 12px;
+    font-size: 14px; 
     position: absolute;
-    top: 40px; /* Position unterhalb des Buttons */
+    top: 40px;
     left: 50%;
     transform: translateX(-50%);
     white-space: nowrap;
@@ -311,6 +311,7 @@ footer {
     z-index: 1000;
     opacity: 0;
     transition: visibility 0.2s, opacity 0.2s ease-in-out;
+    max-width: 250px;
 }
 
 .tooltip.visible {
@@ -318,3 +319,17 @@ footer {
     opacity: 1;
 }
 
+@media (max-width: 768px) {
+    .info-button {
+        width: 40px; 
+        height: 40px;
+        font-size: 16px; 
+    }
+
+    .tooltip {
+        font-size: 12px; 
+        padding: 10px;
+        top: 50px;
+        max-width: 200px;
+    }
+}

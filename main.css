@@ -258,45 +258,23 @@ footer {
     text-decoration: underline;
 }
 
-.info-button-container {
-    position: relative;
-    display: inline-block;
-}
-
-/* Styling für den Titel */
-h1 {
-    color: #000000;
-    background: #4caf50;
-    padding: 12px 20px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 1.8em;
-    margin: 0;
-    z-index: 9;
-    text-align: center;
-    line-height: 1.2;
-    display: inline-block;
-    vertical-align: middle; /* Für bessere Ausrichtung mit dem Info-Button */
-}
-
-/* Styling für den Header-Container */
 .header {
     display: flex;
-    justify-content: center; /* Zentriere den Titel und den Button */
-    align-items: center; /* Vertikale Ausrichtung des Buttons */
-    gap: 10px; /* Abstand zwischen Titel und Info-Button */
+    justify-content: center;
+    align-items: center; 
+    gap: 10px; 
     position: relative;
     padding: 10px;
-    background: #4caf50; /* Gleicher Hintergrund wie h1 */
+    background: #4caf50;
 }
 
-/* Styling für den Info-Button */
 .info-button-container {
     position: relative;
     display: inline-block;
 }
 
 .info-button {
-    background-color: #007bff; /* Blau */
+    background-color: #70ff709c;
     color: white;
     font-size: 14px;
     font-weight: bold;
@@ -316,7 +294,6 @@ h1 {
     transform: scale(1.1);
 }
 
-/* Tooltip-Styling */
 .tooltip {
     visibility: hidden;
     background-color: #333;
@@ -326,7 +303,7 @@ h1 {
     padding: 8px;
     font-size: 12px;
     position: absolute;
-    top: -40px; /* Oberhalb des Buttons */
+    top: -40px;
     left: 50%;
     transform: translateX(-50%);
     white-space: nowrap;

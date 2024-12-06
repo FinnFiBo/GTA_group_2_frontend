@@ -26,6 +26,7 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Anton', sans-serif;
 }
 
+
 h1 {
     color: #000000;
     background: #4caf50;
@@ -262,6 +263,38 @@ footer {
     display: inline-block;
 }
 
+/* Styling für den Titel */
+h1 {
+    color: #000000;
+    background: #4caf50;
+    padding: 12px 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.8em;
+    margin: 0;
+    z-index: 9;
+    text-align: center;
+    line-height: 1.2;
+    display: inline-block;
+    vertical-align: middle; /* Für bessere Ausrichtung mit dem Info-Button */
+}
+
+/* Styling für den Header-Container */
+.header {
+    display: flex;
+    justify-content: center; /* Zentriere den Titel und den Button */
+    align-items: center; /* Vertikale Ausrichtung des Buttons */
+    gap: 10px; /* Abstand zwischen Titel und Info-Button */
+    position: relative;
+    padding: 10px;
+    background: #4caf50; /* Gleicher Hintergrund wie h1 */
+}
+
+/* Styling für den Info-Button */
+.info-button-container {
+    position: relative;
+    display: inline-block;
+}
+
 .info-button {
     background-color: #007bff; /* Blau */
     color: white;
@@ -283,6 +316,7 @@ footer {
     transform: scale(1.1);
 }
 
+/* Tooltip-Styling */
 .tooltip {
     visibility: hidden;
     background-color: #333;
@@ -292,7 +326,7 @@ footer {
     padding: 8px;
     font-size: 12px;
     position: absolute;
-    bottom: 40px; /* Position oberhalb des Buttons */
+    top: -40px; /* Oberhalb des Buttons */
     left: 50%;
     transform: translateX(-50%);
     white-space: nowrap;

@@ -310,6 +310,11 @@ function fetchHighestTripId(callback) {
 // Tracking start
 function startTracking() {
 
+    // Buttons umschalten
+    $("#start").hide(); // Versteckt den "Start"-Button
+    $("#end").show();   // Zeigt den "End"-Button
+    $("#mean_ri").hide();
+
     console.log("Start tracking", appState.user);
     user_id = appState.user[0];
 
@@ -369,11 +374,7 @@ function startTracking() {
                 }
             }, 8000);  // Alle 10 Sekunden
 
-            // Buttons umschalten
-            $("#start").hide(); // Versteckt den "Start"-Button
-            $("#end").show();   // Zeigt den "End"-Button
-            $("#mean_ri").hide();
-
+        
         });
     });
 }

@@ -155,7 +155,7 @@ function getColorByRI(riValue) {
     if (riValue < 80) return [0, 128, 0];        // Grün
     if (riValue < 90) return [0, 191, 255];      // Himmelblau
     if (riValue < 100) return [0, 0, 255];       // Blau
-    return [75, 0, 130];                        // Indigo (für Werte ≥ 100)
+    if (riValue == 100) return [75, 0, 130];     // Indigo (für Werte = 100)
 }
 
 function interpolateColor(rgb1, rgb2, factor) {

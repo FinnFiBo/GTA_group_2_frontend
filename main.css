@@ -298,12 +298,12 @@ footer {
     visibility: hidden;
     background-color: #333;
     color: #fff;
-    text-align: center;
+    text-align: left;
     border-radius: 5px;
     padding: 8px;
     font-size: 12px;
     position: absolute;
-    top: -40px;
+    top: 40px; /* Position unterhalb des Buttons */
     left: 50%;
     transform: translateX(-50%);
     white-space: nowrap;
@@ -313,8 +313,7 @@ footer {
     transition: visibility 0.2s, opacity 0.2s ease-in-out;
 }
 
-.info-button:hover + .tooltip,
-.info-button:focus + .tooltip {
+.tooltip.visible {
     visibility: visible;
     opacity: 1;
 }

@@ -527,8 +527,15 @@ function hashPassword(password) {
 
 
 function toggleTooltip() {
-    const tooltip = document.querySelector('.tooltip'); // Wählt den Tooltip aus
+    const tooltip = document.querySelector('.tooltip');
     if (tooltip) {
-        tooltip.classList.toggle('visible'); // Zeigt oder versteckt den Tooltip
+        tooltip.classList.toggle('visible');
+    }
+}
+
+function closeTooltip() {
+    const tooltip = document.querySelector('.tooltip');
+    if (tooltip) {
+        tooltip.classList.remove('visible');
     }
 }

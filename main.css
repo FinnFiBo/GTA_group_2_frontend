@@ -300,24 +300,41 @@ footer {
     color: white;
     text-align: left;
     border-radius: 5px;
-    padding: 12px;
-    font-size: 14px;
-    position: absolute;
+    padding: 20px;
+    font-size: 16px;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    white-space: normal;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    max-width: 80%; 
+    max-height: 80%; 
+    overflow-y: auto;
     z-index: 1000;
     opacity: 0;
     transition: visibility 0.2s, opacity 0.2s ease-in-out;
-    max-width: 300px;
-    word-wrap: break-word;
 }
 
 .tooltip.visible {
     visibility: visible;
     opacity: 1;
+}
+
+.tooltip .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 18px;
+    background: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.tooltip .close-btn:hover {
+    color: #ff0000;
 }
 
 @media (max-width: 768px) {
@@ -328,9 +345,8 @@ footer {
     }
 
     .tooltip {
-        font-size: 12px;
-        padding: 10px;
-        max-width: 250px;
+        font-size: 14px;
+        padding: 15px;
+        max-width: 90%; 
     }
 }
-

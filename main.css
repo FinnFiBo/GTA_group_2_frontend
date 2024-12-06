@@ -126,7 +126,7 @@ footer {
 
 .legend {
     position: absolute;
-    top: 30%;
+    top: 20%;
     left: 10px;
     background: white;
     padding: 10px;
@@ -136,6 +136,9 @@ footer {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
     border-radius: 5px;
     z-index: 9999; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .legend h4 {
@@ -144,9 +147,9 @@ footer {
 }
 
 .gradient-bar {
-    width: 100%;
-    height: 20px;
-    background: linear-gradient(to right, 
+    width: 20px; /* Schmale Breite für vertikalen Verlauf */
+    height: 300px; /* Länge des Balkens */
+    background: linear-gradient(to bottom, 
         rgb(255, 0, 0),        /* 10 */
         rgb(255, 69, 0),       /* 10–19 */
         rgb(255, 140, 0),      /* 20–29 */
@@ -166,14 +169,15 @@ footer {
 
 .labels {
     display: flex;
+    flex-direction: column; /* Vertikale Ausrichtung */
     justify-content: space-between;
-    font-size: 12px;
+    height: 300px; /* Höhe der Labels passt zur Höhe des Farbverlaufs */
 }
 
 .labels span {
-    position: relative;
+    font-size: 12px;
+    text-align: center;
 }
-
 .auth-overlay {
     position: fixed;
     top: 0;

@@ -382,6 +382,10 @@ function startTracking() {
 // Tracking stop
 function stopTracking() {
 
+
+    $("#start").show(); // Zeigt den "Start"-Button
+    $("#end").hide(); 
+
     get_ri(appState.latLng) // hier RI-Wert anpassen oder berechnen
     .then(values => {
     // Letzten Punkt einfügen und nach Abschluss die Linie zeichnen
@@ -411,9 +415,7 @@ function stopTracking() {
                     $("#mean_ri_value").text("N/A");
                 }
 
-                // Buttons umschalten
-                $("#start").show(); // Zeigt den "Start"-Button
-                $("#end").hide();   // Versteckt den "End"-Button
+                
                 $("#mean_ri").show();
                 $(".legend").show();
                 

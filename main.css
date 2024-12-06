@@ -296,22 +296,23 @@ footer {
 
 .tooltip {
     visibility: hidden;
-    background-color: #4caf50; 
+    background-color: #4caf50;
     color: white;
     text-align: left;
     border-radius: 5px;
     padding: 12px;
-    font-size: 14px; 
+    font-size: 14px;
     position: absolute;
-    top: 40px;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
-    white-space: nowrap;
+    transform: translate(-50%, -50%);
+    white-space: normal;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     z-index: 1000;
     opacity: 0;
     transition: visibility 0.2s, opacity 0.2s ease-in-out;
-    max-width: 250px;
+    max-width: 300px;
+    word-wrap: break-word;
 }
 
 .tooltip.visible {
@@ -321,15 +322,15 @@ footer {
 
 @media (max-width: 768px) {
     .info-button {
-        width: 40px; 
+        width: 40px;
         height: 40px;
-        font-size: 16px; 
+        font-size: 16px;
     }
 
     .tooltip {
-        font-size: 12px; 
+        font-size: 12px;
         padding: 10px;
-        top: 50px;
-        max-width: 200px;
+        max-width: 250px;
     }
 }
+

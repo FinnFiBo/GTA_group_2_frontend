@@ -419,6 +419,8 @@ function stopTracking() {
                     $("#mean_ri_value").text("N/A");
                 }
 
+                console.log("Daten an API:", { trip_id: appState.trip_id, mean_ri: mean_ri });
+
                 fetch(`${app_url}update_mean_ri`, {
                     method: "POST",
                     headers: {

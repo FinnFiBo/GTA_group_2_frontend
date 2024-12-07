@@ -416,7 +416,6 @@ function stopTracking() {
                     
                     let mean_ri = appState.pointHistory.reduce((sum, point) => sum + (point.ri_value || 0), 0) / appState.pointHistory.length;
                     console.log("Berechneter mean_ri:", mean_ri); 
-                    console.log("pointHistory:", appState.pointHistory); 
                     $("#mean_ri_value").text(mean_ri.toFixed(2));
                 } else {
                     $("#mean_ri_value").text("N/A");

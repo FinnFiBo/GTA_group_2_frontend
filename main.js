@@ -403,6 +403,9 @@ function stopTracking() {
                                 return;
                             }
 
+                            // Linie zeichnen
+                            drawColoredLine();
+
                             // Punktehistorie speichern
                             appState.pointHistory = data;
 
@@ -445,8 +448,6 @@ function stopTracking() {
                                 $("#mean_ri").show(); // Zeige den Container trotzdem
                             }
 
-                            // Linie zeichnen
-                            drawColoredLine();
                         })
                         .catch(error => {
                             console.error("Fehler beim Abrufen der Punktehistorie:", error);

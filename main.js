@@ -413,11 +413,9 @@ function stopTracking() {
 
                 // Berechnung des Durchschnitts (mean_ri)
                 if (appState.pointHistory.length > 0) {
-                    let mean_ri = appState.pointHistory
-                        .map(point => Number(point.ri_value)) 
-                        .filter(value => !isNaN(value))
-                        .reduce((sum, value) => sum + value, 0) / appState.pointHistory.length;
-
+                    
+                    let mean_ri = appState.pointHistory.reduce((sum, point) => sum + (point.ri_value || 0), 0) / appState.pointHistory.length;
+                    console.log("Berechneter mean_ri:", mean_ri); 
                     $("#mean_ri_value").text(mean_ri.toFixed(2));
                 } else {
                     $("#mean_ri_value").text("N/A");

@@ -198,6 +198,7 @@ footer {
 
 .auth-form {
     background: white;
+    max-width: 90%;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
@@ -222,6 +223,8 @@ footer {
 .auth-form input {
     width: 100%;
     padding: 10px;
+    max-width: calc(100% - 20px);
+    box-sizing: border-box;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -350,3 +353,4 @@ footer {
         max-width: 90%; 
     }
 }
+

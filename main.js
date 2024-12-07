@@ -12,6 +12,7 @@ let appState = {
     pointHistory: [],
     currentZoom: 8,
     isTracking: false,
+    mean_ri: null,
 };
 
 
@@ -413,15 +414,13 @@ function stopTracking() {
 
                 // Berechnung des Durchschnitts (mean_ri)
                 if (appState.pointHistory.length > 0) {
-                    
                     let mean_ri = appState.pointHistory.reduce((sum, point) => sum + (point.ri_value || 0), 0) / appState.pointHistory.length;
+                    appState.mean_ri = mean_ri
                     console.log("Berechneter mean_ri:", mean_ri); 
                     $("#mean_ri_value").text(mean_ri.toFixed(2));
                 } else {
                     $("#mean_ri_value").text("N/A");
                 }
-
-                console.log("Daten an API:", { trip_id: appState.trip_id, mean_ri: mean_ri });
 
                 fetch(`${app_url}update_mean_ri`, {
                     method: "POST",
@@ -430,7 +429,7 @@ function stopTracking() {
                     },
                     body: JSON.stringify({
                         trip_id: appState.trip_id,
-                        mean_ri: mean_ri
+                        mean_ri: appState.mean_ri
                     })
                 })
                 .then(response => response.json())
@@ -446,6 +445,8 @@ function stopTracking() {
                 });
                 
                 $("#mean_ri").show();
+                
+                appState.mean_ri = null;
                                 
             })
             .catch(error => {

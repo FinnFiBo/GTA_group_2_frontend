@@ -388,6 +388,7 @@ function stopTracking() {
 
     $("#start").show(); // Zeigt den "Start"-Button
     $("#end").hide(); 
+    $(".legend").show();
 
     get_ri(appState.latLng) // hier RI-Wert anpassen oder berechnen
     .then(values => {
@@ -420,8 +421,7 @@ function stopTracking() {
 
                 
                 $("#mean_ri").show();
-                $(".legend").show();
-                
+                                
             })
             .catch(error => {
                 console.error("Fehler beim Stop-Tracking:", error);

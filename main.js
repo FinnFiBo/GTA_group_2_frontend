@@ -384,77 +384,88 @@ function startTracking() {
 
 // Tracking stop
 function stopTracking() {
-
-
     $("#start").show(); // Zeigt den "Start"-Button
     $("#end").hide(); 
     $(".legend").show();
 
-    get_ri(appState.latLng) // hier RI-Wert anpassen oder berechnen
-    .then(values => {
-    // Letzten Punkt einfügen und nach Abschluss die Linie zeichnen
-        insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, values[0], values[1], values[2])
-            .then(() => {
+    get_ri(appState.latLng) // RI-Wert für den letzten Punkt berechnen
+        .then(values => {
+            // Letzten Punkt einfügen
+            insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, values[0], values[1], values[2])
+                .then(() => {
+                    // Punktehistorie abrufen
+                    fetch(`${app_url}point_history?trip_id=${appState.trip_id}`, { method: "GET" })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log("Punkte abgerufen:", data);
+                            if (data.error) {
+                                console.error("Fehler beim Abrufen der Punkte:", data.error);
+                                return;
+                            }
 
-                //Get point history
-                fetch(`${app_url}point_history?trip_id=${appState.trip_id}`, { method : "GET" })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log("Punkte abgerufen:", data);
-                        if (data.error) {
-                            console.error("Fehler beim Abrufen der Punkte:", data.error);
-                            return;
-                        }
-                        appState.pointHistory = data;
-                    })
+                            // Punktehistorie speichern
+                            appState.pointHistory = data;
 
-                // drawColoredLine erst nach erfolgreichem Insert aufrufen
-                drawColoredLine();
+                            // Durchschnitt berechnen
+                            if (appState.pointHistory.length > 0) {
+                                let mean_ri = appState.pointHistory.reduce(
+                                    (sum, point) => sum + (point.ri_value || 0), 0
+                                ) / appState.pointHistory.length;
 
-                // Berechnung des Durchschnitts (mean_ri)
-                if (appState.pointHistory.length > 0) {
-                    let mean_ri = appState.pointHistory.reduce((sum, point) => sum + (point.ri_value || 0), 0) / appState.pointHistory.length;
-                    $("#mean_ri_value").text(mean_ri.toFixed(2));
-                } else {
-                    $("#mean_ri_value").text("N/A");
-                }
+                                // UI aktualisieren
+                                $("#mean_ri_value").text(mean_ri.toFixed(2));
 
-                console.log("Daten an API:", { trip_id: appState.trip_id, mean_ri: mean_ri });
+                                // mean_ri an die API senden
+                                fetch(`${app_url}update_mean_ri`, {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    },
+                                    body: JSON.stringify({
+                                        trip_id: appState.trip_id,
+                                        mean_ri: mean_ri
+                                    })
+                                })
+                                    .then(response => response.json())
+                                    .then(updateData => {
+                                        if (updateData.error) {
+                                            console.error("Fehler beim Aktualisieren von mean_ri:", updateData.error);
+                                        } else {
+                                            console.log("mean_ri erfolgreich aktualisiert:", updateData);
+                                        }
 
-                fetch(`${app_url}update_mean_ri`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        trip_id: appState.trip_id,
-                        mean_ri: mean_ri
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        console.error("Fehler beim Aktualisieren von mean_ri:", data.error);
-                    } else {
-                        console.log("mean_ri erfolgreich aktualisiert:", data);
-                    }
+                                        // mean_ri erst nach erfolgreichem Update anzeigen
+                                        $("#mean_ri").show();
+                                    })
+                                    .catch(error => {
+                                        console.error("Fehler beim Aktualisieren von mean_ri:", error);
+                                    });
+                            } else {
+                                $("#mean_ri_value").text("N/A");
+                                $("#mean_ri").show(); // Zeige den Container trotzdem
+                            }
+
+                            // Linie zeichnen
+                            drawColoredLine();
+                        })
+                        .catch(error => {
+                            console.error("Fehler beim Abrufen der Punktehistorie:", error);
+                        });
                 })
                 .catch(error => {
-                    console.error("Fehler beim Aktualisieren von mean_ri:", error);
+                    console.error("Fehler beim Einfügen des letzten Punkts:", error);
                 });
-                
-                $("#mean_ri").show();
-                                
-            })
-            .catch(error => {
-                console.error("Fehler beim Stop-Tracking:", error);
-            });
 
-        clearInterval(timer);
-        timer = null;
-        appState.isTracking = false;
-    });
+            // Tracking stoppen
+            clearInterval(timer);
+            timer = null;
+            appState.isTracking = false;
+        })
+        .catch(error => {
+            console.error("Fehler bei der RI-Berechnung:", error);
+        });
 }
+
 
 // Berechnung des RI-Wertes
 async function get_ri(latlng) {

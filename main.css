@@ -110,7 +110,7 @@ footer {
     border-radius: 15px;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
     position: fixed;
-    bottom: 15%;
+    bottom: 20%;
     left: 50%;
     transform: translateX(-50%);
     text-align: center; 
@@ -127,7 +127,7 @@ footer {
 
 .legend {
     position: absolute;
-    top: 20%;
+    top: 25%;
     left: 10px;
     background: white;
     padding: 10px;

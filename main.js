@@ -375,7 +375,7 @@ function startTracking() {
                         insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, values[0], values[1], values[2]);
                     });
                 }
-            }, 8000);  // Alle 10 Sekunden
+            }, 8000);  // Alle 8 Sekunden
 
         
         });

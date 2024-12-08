@@ -575,7 +575,7 @@ function showAllPaths() {
             }
             console.log("Alle Pfade abgerufen:", data);
 
-            data.forEach(path => {
+            data.data.forEach(path => {
                 appState.pointHistory = path;
                 drawColoredLine();
             });

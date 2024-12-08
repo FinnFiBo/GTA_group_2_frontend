@@ -192,6 +192,8 @@ function drawColoredLine() {
         return; // Es gibt keine Punkte, zwischen denen eine Linie gezeichnet werden kann
     }
 
+    console.log("Zeichne farbige Linie", appState.pointHistory);
+
     map.removeLayer(appState.points); 
     appState.points.clearLayers();   
     map.addLayer(appState.points);
@@ -428,11 +430,11 @@ function stopTracking() {
                             console.error("Fehler beim Abrufen der Punkte:", data.error);
                             return;
                         }
-                        appState.pointHistory = data;
+                        appState.pointHistory = data.points;
+                        drawColoredLine();
                     })
 
                 // drawColoredLine erst nach erfolgreichem Insert aufrufen
-                drawColoredLine();
 
                 // Berechnung des Durchschnitts (mean_ri)
                 if (appState.pointHistory.length > 0) {
@@ -566,6 +568,10 @@ function register() {
 }
 
 function showAllPaths() {
+
+    $("#mean_ri").hide();
+    $(".legend").show();
+
     fetch(`${app_url}all_paths?user_id=${appState.user[0]}`, { method: "GET" })
         .then(response => response.json())
         .then(data => {
@@ -576,7 +582,7 @@ function showAllPaths() {
             console.log("Alle Pfade abgerufen:", data);
 
             data.data.forEach(path => {
-                appState.pointHistory = path;
+                appState.pointHistory = path.points;
                 drawColoredLine();
             });
         })

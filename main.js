@@ -146,6 +146,7 @@ function onload() {
 
     // Button-Event-Handler registrieren
 	$("#start").click(startTracking);
+    $("#allPaths").click(showAllPaths);
     $("#end").click(stopTracking).hide(); // End-Button zu Beginn verstecken
     $("#mean_ri").hide();
     $(".legend").hide();
@@ -190,10 +191,10 @@ function drawColoredLine() {
     if (appState.pointHistory.length < 2) {
         return; // Es gibt keine Punkte, zwischen denen eine Linie gezeichnet werden kann
     }
-   
+
     map.removeLayer(appState.points); 
     appState.points.clearLayers();   
-    map.addLayer(appState.points); 
+    map.addLayer(appState.points);
 
     for (let i = 0; i < appState.pointHistory.length - 1; i++) {
         let currentPoint = appState.pointHistory[i];
@@ -334,7 +335,8 @@ function startTracking() {
         return;
     }
  
-    $("#start").hide(); 
+    $("#start").hide();
+    $("#allPaths").hide(); 
     $("#end").show();  
     $("#mean_ri").hide();
     $(".legend").hide();
@@ -407,6 +409,7 @@ function stopTracking() {
 
 
     $("#start").show(); // Zeigt den "Start"-Button
+    $("#allPaths").show();
     $("#end").hide(); 
     $(".legend").show();
 
@@ -560,6 +563,26 @@ function register() {
     
             document.getElementById("auth-container").style.display = "none";
         })
+}
+
+function showAllPaths() {
+    fetch(`${app_url}all_paths?user_id=${appState.user[0]}`, { method: "GET" })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                console.error("Fehler beim Abrufen aller Pfade:", data.error);
+                return;
+            }
+            console.log("Alle Pfade abgerufen:", data);
+
+            data.forEach(path => {
+                appState.pointHistory = path;
+                drawColoredLine();
+            });
+        })
+        .catch(error => {
+            console.error("Fehler beim Abrufen aller Pfade:", error);
+        });
 }
 
 function hashPassword(password) {

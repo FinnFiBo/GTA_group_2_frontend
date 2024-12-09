@@ -19,14 +19,9 @@ let appState = {
 let wfs = 'https://baug-ikg-gis-01.ethz.ch:8443/geoserver/GTA24_lab06/wfs';
 let app_url = 'https://gta-project-group-2.vercel.app/';
 let timer = null;
-/*const gs = {
+const gs = {
     wms: "https://baug-ikg-gis-01.ethz.ch:8443/geoserver/GTA24_lab12/wms",
 }
-
-const attributesDropdown = document.getElementById("attributes");
-const operationDropdown = document.getElementById("operation");
-const valuesDropdown = document.getElementById("values");
-const filterBtn = document.getElementById("filter-btn");
 
 let webapp_trajectory_point = L.tileLayer.wms(gs.wms, {
     layers: "GTA24_lab06:webapp_trajectory_point",
@@ -38,7 +33,6 @@ let overlays = {
     "trips": webapp_trajectory_point
 };
 
-const layerControl = L.control.layers(overlays);*/
 
 function formatTime(timestamp) {
     const date = new Date(timestamp);
@@ -139,6 +133,8 @@ function onload() {
     map.addLayer(appState.markers);
     map.addLayer(appState.points);
     map.addLayer(appState.color_points); 
+    const layerControl = L.control.layers(null, overlays).addTo(map);
+
 
     map.on('zoomend', function () {
         appState.currentZoom = map.getZoom(); // Aktuellen Zoom speichern

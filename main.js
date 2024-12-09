@@ -16,10 +16,10 @@ let appState = {
 };
 
 
-/*let wfs = 'https://baug-ikg-gis-01.ethz.ch:8443/geoserver/GTA24_lab06/wfs';
+let wfs = 'https://baug-ikg-gis-01.ethz.ch:8443/geoserver/GTA24_lab06/wfs';
 let app_url = 'https://gta-project-group-2.vercel.app/';
 let timer = null;
-const gs = {
+/*const gs = {
     wms: "https://baug-ikg-gis-01.ethz.ch:8443/geoserver/GTA24_lab12/wms",
 }
 

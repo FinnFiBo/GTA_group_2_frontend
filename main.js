@@ -16,7 +16,7 @@ let appState = {
 };
 
 
-let wfs = 'https://baug-ikg-gis-01.ethz.ch:8443/geoserver/GTA24_lab06/wfs';
+/*let wfs = 'https://baug-ikg-gis-01.ethz.ch:8443/geoserver/GTA24_lab06/wfs';
 let app_url = 'https://gta-project-group-2.vercel.app/';
 let timer = null;
 const gs = {
@@ -32,7 +32,7 @@ let webapp_trajectory_point = L.tileLayer.wms(gs.wms, {
 let overlays = {
     "trips": webapp_trajectory_point
 };
-
+*/
 
 function formatTime(timestamp) {
     const date = new Date(timestamp);
@@ -133,7 +133,7 @@ function onload() {
     map.addLayer(appState.markers);
     map.addLayer(appState.points);
     map.addLayer(appState.color_points); 
-    const layerControl = L.control.layers(null, overlays).addTo(map);
+    /*const layerControl = L.control.layers(null, overlays).addTo(map);*/
 
 
     map.on('zoomend', function () {

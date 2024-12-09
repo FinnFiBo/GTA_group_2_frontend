@@ -15,29 +15,9 @@ let appState = {
     mean_ri: null,
 };
 
-
 let wfs = 'https://baug-ikg-gis-01.ethz.ch:8443/geoserver/GTA24_lab06/wfs';
 let app_url = 'https://gta-project-group-2.vercel.app/';
 let timer = null;
-/*const gs = {
-    wms: "https://baug-ikg-gis-01.ethz.ch:8443/geoserver/GTA24_lab12/wms",
-}
-
-let webapp_trajectory_point = L.tileLayer.wms(gs.wms, {
-    layers: "GTA24_lab06:webapp_trajectory_point",
-    format: "image/png",        
-    transparent: true,                   
-});
-
-let overlays = {
-    "trips": webapp_trajectory_point
-};
-*/
-
-function formatTime(timestamp) {
-    const date = new Date(timestamp);
-    return date.toISOString(); // Konvertiert in ISO 8601 Format: yyyy-MM-ddTHH:mm:ss.sssZ
-}
 
 
 function drawMarkers() {
@@ -133,17 +113,14 @@ function onload() {
     map.addLayer(appState.markers);
     map.addLayer(appState.points);
     map.addLayer(appState.color_points); 
-    /*const layerControl = L.control.layers(null, overlays).addTo(map);*/
-
 
     map.on('zoomend', function () {
         appState.currentZoom = map.getZoom(); // Aktuellen Zoom speichern
     });
 
-    // Button-Event-Handler registrieren
 	$("#start").click(startTracking);
     $("#allPaths").click(showAllPaths);
-    $("#end").click(stopTracking).hide(); // End-Button zu Beginn verstecken
+    $("#end").click(stopTracking).hide();
     $("#mean_ri").hide();
     $(".legend").hide();
 
@@ -180,12 +157,12 @@ function interpolateColor(rgb1, rgb2, factor) {
     const g = Math.round(rgb1[1] + factor * (rgb2[1] - rgb1[1]));
     const b = Math.round(rgb1[2] + factor * (rgb2[2] - rgb1[2]));
 
-    return `rgb(${r}, ${g}, ${b})`; // Gib die interpolierte Farbe als RGB-String zurück
+    return `rgb(${r}, ${g}, ${b})`; // Gibt die interpolierte Farbe als RGB-String zurück
 }
 
 function drawColoredLine() {
     if (appState.pointHistory.length < 2) {
-        return; // Es gibt keine Punkte, zwischen denen eine Linie gezeichnet werden kann
+        return; 
     }
 
     console.log("Zeichne farbige Linie", appState.pointHistory);
@@ -198,11 +175,10 @@ function drawColoredLine() {
         let currentPoint = appState.pointHistory[i];
         let nextPoint = appState.pointHistory[i + 1];
 
-        // Berechne Farben der Punkte als RGB-Werte
         let currentColor = getColorByRI(currentPoint.ri_value || 5);
         let nextColor = getColorByRI(nextPoint.ri_value || 5);
 
-        // Anzahl der Segmente für die Interpolation (z.B. 10 für feineren Verlauf)
+        // Anzahl der Segmente für die Interpolation
         let segments = 10;
 
         let segmentLatLngs = [];
@@ -225,9 +201,13 @@ function drawColoredLine() {
         }
     }
 
-    map.addLayer(appState.color_points); // Den Layer der Karte hinzufügen
+    map.addLayer(appState.color_points);
 }
 
+function formatTime(timestamp) {
+    const date = new Date(timestamp);
+    return date.toISOString(); // Konvertiert in ISO 8601 Format: yyyy-MM-ddTHH:mm:ss.sssZ
+}
 
 // INSERT point
 // REF: https://github.com/Georepublic/leaflet-wfs/blob/master/index.html#L201
@@ -271,7 +251,6 @@ function insertPoint(lat, lng, time, trip_id, ri_value, noise, distance) {
 		contentType: "text/xml",
 		data: postData,
 		success: function() {	
-			//Success feedback
 			console.log("Success from AJAX, data sent to Geoserver");
 
             let point = L.circleMarker([lat, lng], {
@@ -282,7 +261,7 @@ function insertPoint(lat, lng, time, trip_id, ri_value, noise, distance) {
             }).bindPopup(`Trip ID: ${trip_id}<br>RI Value: ${ri_value}<br>Time: ${time}`);
             appState.points.addLayer(point);
 
-           // Zeichne schwarze Linie zwischen den Punkten
+           // Zeichnet schwarze Linie zwischen den Punkten
            if (appState.pointHistory.length > 0) {
             let lastPoint = appState.pointHistory[appState.pointHistory.length - 1];
             let latLngs = [
@@ -290,7 +269,6 @@ function insertPoint(lat, lng, time, trip_id, ri_value, noise, distance) {
                 [lat, lng]                       // Neuer Punkt
             ];
 
-            // Polyline (schwarze Linie) zwischen den Punkten
             let polyline = L.polyline(latLngs, { color: 'black' }).addTo(appState.points);
         }
 
@@ -324,7 +302,6 @@ function fetchHighestTripId(callback) {
             callback(1); // Fallback auf 1, falls ein Fehler auftritt
         });
 }
-
 
 // Tracking start
 function startTracking() {
@@ -360,9 +337,7 @@ function startTracking() {
                 console.error("Fehler beim Anlegen des Trips:", error);
             });
 
-        appState.pointHistory = [];
-        appState.isTracking = true;
-    
+           
         if (!appState.latLng) {
             // Fehlernachricht anzeigen
             let errMsg = $("#error-messages"); // Stelle sicher, dass dieses Element existiert
@@ -372,12 +347,14 @@ function startTracking() {
         }
         
         if (map && appState.latLng) {
-            map.setView(appState.latLng, 15); // Fokussiere und zoome auf Level 15
+            map.setView(appState.latLng, 15); 
         }
 
+        appState.pointHistory = [];
+        appState.isTracking = true;
         appState.color_points.clearLayers();
         
-        get_ri(appState.latLng) // hier RI-Wert anpassen oder berechnen
+        get_ri(appState.latLng) // hier RI-Wert berechnen
         .then(values => {
 
             insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, values[0], values[1], values[2]);
@@ -389,7 +366,7 @@ function startTracking() {
             timer = setInterval(() => {
                 if (appState.latLng && appState.time) {
                     
-                    get_ri(appState.latLng) // hier RI-Wert anpassen oder berechnen
+                    get_ri(appState.latLng) // hier RI-Wert berechnen
                     .then(values => {
                         console.log("RI-Werte:", values);
                         insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, values[0], values[1], values[2]);
@@ -411,7 +388,7 @@ function stopTracking() {
     $("#end").hide(); 
     $(".legend").show();
 
-    get_ri(appState.latLng) // hier RI-Wert anpassen oder berechnen
+    get_ri(appState.latLng) // hier RI-Wert berechnen
     .then(values => {
     // Letzten Punkt einfügen und nach Abschluss die Linie zeichnen
         insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, values[0], values[1], values[2])
@@ -429,8 +406,6 @@ function stopTracking() {
                         appState.pointHistory = data.points;
                         drawColoredLine();
                     })
-
-                // drawColoredLine erst nach erfolgreichem Insert aufrufen
 
                 // Berechnung des Durchschnitts (mean_ri)
                 if (appState.pointHistory.length > 0) {
@@ -597,7 +572,6 @@ function hashPassword(password) {
     }
     return hash.toString();
 }
-
 
 function toggleTooltip() {
     const tooltip = document.querySelector('.tooltip');

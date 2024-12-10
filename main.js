@@ -651,10 +651,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Button-Klick-Event-Listener
     allPathsButton.addEventListener('click', async () => {
         if (allPathsButton.classList.contains('clicked')) {
-            // Wenn der Button deaktiviert wird, entferne die Trips
+            // Button deaktivieren: Entferne gezeichnete Trips und setze Button zurück
             console.log("Button deaktiviert, entferne alle Trips.");
-
-            // Zustand zurücksetzen
+            
             allPathsButton.classList.remove('clicked');
             allPathsButton.style.backgroundColor = originalBackgroundColor;
             allPathsButton.style.color = originalTextColor;
@@ -666,16 +665,15 @@ document.addEventListener('DOMContentLoaded', () => {
             $("#mean_ri").hide(); 
 
         } else {
-            // Wenn der Button aktiviert wird, lade die Trips neu
+            // Button aktivieren: Zeige alle Trips und färbe den Button dunkelgrün
             console.log("Button aktiviert, lade alle Trips.");
 
-            // Zustand aktivieren
             allPathsButton.classList.add('clicked');
             allPathsButton.style.backgroundColor = "darkgreen";
             allPathsButton.style.color = "white";
- 
-        }
 
-        console.log("Button clicked! Current state:", allPathsButton.classList.contains('clicked'));
+            // Zeige alle Trips
+            await showAllPaths();  
+        }
     });
 });

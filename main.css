@@ -104,6 +104,7 @@ footer {
 #buttons-container #allPaths {
     color: rgb(255, 255, 255);
     font-weight: normal;
+    order: -1;
 }
 
 #mean_ri {

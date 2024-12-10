@@ -621,6 +621,7 @@ async function showAllPaths() {
         });
 }
 
+/*
 function showAllPaths() {
     // Verhindert Probleme, falls der Benutzer mehrmals auf den "Alle Pfade"-Button klickt
     if (appState.isShowingPaths) {
@@ -672,6 +673,7 @@ function showAllPaths() {
             console.error("Fehler beim Abrufen aller Pfade:", error);
         });
 }
+        */
 
 function hashPassword(password) {
     // Einfache Hash-Funktion für das Passwort zur übertragung

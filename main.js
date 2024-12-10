@@ -558,8 +558,6 @@ function register() {
 
 async function showAllPaths() {
 
-    clearAllPaths();
-
     const response = await fetch(`${app_url}get_trips?user_id=${appState.user[0]}`, { method: "GET" });
     const paths = await response.json();
 
@@ -667,17 +665,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-function clearAllPaths() {
-    // Entferne vorhandene Linien auf der Karte
-    if (appState.lines) {
-        appState.lines.forEach(line => line.setMap(null));
-        appState.lines = [];
-    }
-
-    // Zurücksetzen des Punktverlaufs
-    appState.pointHistory = [];
-    
-    // Optionale Bereinigung weiterer UI-Elemente
-    $("#mean_ri_value").text("");
-    $("#mean_ri").hide();
-}

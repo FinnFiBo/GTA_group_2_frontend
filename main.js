@@ -567,13 +567,13 @@ async function showAllPaths() {
     }
     console.log("Alle Pfade abgerufen:", paths);
 
+    let mean_RIs = [];
+
     paths.forEach(trip_id => {
         fetch(`${wfs}?service=WFS&version=1.0.0&request=GetFeature&typeName=GTA24_lab06:webapp_trajectory_point&outputFormat=application/json&cql_filter=trip_id=${trip_id}`, { method: "GET" })
         .then(response => response.json())
         .then(data => {
             console.log("Alle Punkte abgerufen:", data);
-
-            let mean_RIs = [];
             let paths = {};
 
             data.features.forEach(feature => {
@@ -599,19 +599,16 @@ async function showAllPaths() {
                     mean_RIs.push(null);
                 }
             });
-
-            console.log("Berechnete mean_RIs:", mean_RIs);
-
-            let mean_ri = mean_RIs.reduce((sum, ri) => sum + (ri || 0), 0) / mean_RIs.length;
-            console.log("Berechneter mean_ri:", mean_ri);
-
-            $("#mean_ri_value").text(mean_ri.toFixed(2));
-            $("#mean_ri").show();
         })
         .catch(error => {
             console.error("Fehler beim Abrufen aller Pfade:", error);
         });
-});
+    
+    let mean_ri = mean_RIs.reduce((sum, ri) => sum + ri, 0) / mean_RIs.length;
+    console.log("Berechneter mean_ri:", mean_ri);
+    $("#mean_ri_value").text(mean_ri.toFixed(2));
+    $("#mean_ri").show();
+    });
 }
 
 function hashPassword(password) {

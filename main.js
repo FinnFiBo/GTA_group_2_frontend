@@ -124,6 +124,7 @@ function onload() {
     });
 
 	$("#start").click(startTracking);
+    $("#allPaths").show();
     $("#allPaths").click(showAllPaths);
     $("#end").click(stopTracking).hide();
     $("#mean_ri").hide();
@@ -389,7 +390,6 @@ function stopTracking() {
 
 
     $("#start").show(); // Zeigt den "Start"-Button
-    $("#allPaths").show();
     $("#end").hide(); 
     $(".legend").show();
 

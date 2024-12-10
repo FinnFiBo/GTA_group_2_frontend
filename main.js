@@ -566,6 +566,7 @@ function showAllPaths() {
     }, 3000);
 
     // Verstecke  die "mean_ri"-Anzeige und zeige die Legende
+    $("#allPaths").hide();
     $("#mean_ri").hide();
     $(".legend").show();
 

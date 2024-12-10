@@ -102,7 +102,7 @@ function onload() {
         errMsg.show();
     }
 
-    map = L.map('map').setView([46.82, 8.22], 8);
+    map = L.map('map').setView([47.38035, 8.52265], 12);
     appState.markers = L.layerGroup();
     appState.points = L.layerGroup();
     appState.color_points = L.layerGroup(); 

@@ -555,6 +555,72 @@ function register() {
     })
 }
 
+async function showAllPaths() {
+
+    response = await fetch(`${app_url}get_trips?user_id=${appState.user[0]}`, { method: "GET" });
+    data = await response.json();
+
+    if (data.error) {
+        console.error("Fehler beim Abrufen aller Pfade:", data.error);
+        return;
+    }
+    console.log("Alle Pfade abgerufen:", data);
+
+    data.forEach(trip_id => {
+        fetch(`${wfs}?service=WFS&version=1.0.0&request=GetFeature&typeName=GTA24_lab06:webapp_trajectory_point&outputFormat=application/json&cql_filter=trip_id=${trip_id}`, { method: "GET" })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Alle Punkte abgerufen:", data);
+        })
+    });
+
+    fetch(`${wfs}?service=WFS&version=1.0.0&request=GetFeature&typeName=GTA24_lab06:webapp_trajectory_point&outputFormat=application/json&cql_filter=user_id=${appState.user[0]}`, { method: "GET" })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                console.error("Fehler beim Abrufen aller Pfade:", data.error);
+                return;
+            }
+            console.log("Alle Pfade abgerufen:", data);
+
+            let mean_RIs = [];
+            let paths = {};
+
+            data.features.forEach(feature => {
+                let trip_id = feature.properties.trip_id;
+                if (!paths[trip_id]) {
+                    paths[trip_id] = [];
+                }
+                paths[trip_id].push({
+                    lat: feature.geometry.coordinates[1],
+                    lng: feature.geometry.coordinates[0],
+                    ri_value: (feature.properties.ri_value + feature.properties.noise_value + feature.properties.tree_distance) / 3
+                });
+            });
+
+            Object.keys(paths).forEach(trip_id => {
+                appState.pointHistory = paths[trip_id];
+                drawColoredLine();
+
+                if (appState.pointHistory.length > 0) {
+                    let mean_ri = appState.pointHistory.reduce((sum, point) => sum + (point.ri_value || 0), 0) / appState.pointHistory.length;
+                    mean_RIs.push(mean_ri);
+                } else {
+                    mean_RIs.push(null);
+                }
+            });
+
+            let mean_ri = mean_RIs.reduce((sum, ri) => sum + (ri || 0), 0) / mean_RIs.length;
+            console.log("Berechneter mean_ri:", mean_ri);
+
+            $("#mean_ri_value").text(mean_ri.toFixed(2));
+            $("#mean_ri").show();
+        })
+        .catch(error => {
+            console.error("Fehler beim Abrufen aller Pfade:", error);
+        });
+}
+
 function showAllPaths() {
     // Verhindert Probleme, falls der Benutzer mehrmals auf den "Alle Pfade"-Button klickt
     if (appState.isShowingPaths) {

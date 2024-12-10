@@ -559,7 +559,7 @@ function register() {
 async function showAllPaths() {
 
     const response = await fetch(`${app_url}get_trips?user_id=${appState.user[0]}`, { method: "GET" });
-    const data = await response.json();
+    const paths = await response.json();
 
     if (paths.error) {
         console.error("Fehler beim Abrufen aller Pfade:", paths.error);

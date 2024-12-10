@@ -126,7 +126,7 @@ footer {
 
 #city_ri {
     background-color: #4caf50;
-    color: white;
+    color: rgb(0, 0, 0);
     font-size: 1.4em;
     font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
     padding: 12px 30px;
@@ -145,6 +145,7 @@ footer {
     font-weight: normal;
     margin-top: 5px;
     display: block;
+    text-align: center; 
 }
 
 .legend {

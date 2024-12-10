@@ -136,8 +136,8 @@ footer {
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     position: fixed;
-    bottom: 10%;
-    right: 15%;
+    top: 20%;
+    right: 5%;
 }
 
 #city_ri:hover {

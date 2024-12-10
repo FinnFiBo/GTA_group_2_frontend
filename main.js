@@ -14,6 +14,7 @@ let appState = {
     currentZoom: 8,
     isTracking: false,
     mean_ri: null,
+    showAllPathsActive: false,
 };
 
 let wfs = 'https://baug-ikg-gis-01.ethz.ch:8443/geoserver/GTA24_lab06/wfs';
@@ -558,6 +559,12 @@ function register() {
 
 async function showAllPaths() {
 
+    if (appState.showAllPathsActive) {
+        console.log("Deaktivieren von Show All Paths");
+        appState.showAllPathsActive = false;
+    } else {
+        
+
     response = await fetch(`${app_url}get_trips?user_id=${appState.user[0]}`, { method: "GET" });
     data = await response.json();
 
@@ -610,6 +617,7 @@ async function showAllPaths() {
             console.error("Fehler beim Abrufen aller Pfade:", error);
         });
 });
+}
 }
 
 function hashPassword(password) {

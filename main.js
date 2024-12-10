@@ -673,9 +673,7 @@ document.addEventListener('DOMContentLoaded', () => {
             allPathsButton.classList.add('clicked');
             allPathsButton.style.backgroundColor = "darkgreen";
             allPathsButton.style.color = "white";
-
-            // Zeige alle Trips
-            await showAllPaths();  
+ 
         }
 
         console.log("Button clicked! Current state:", allPathsButton.classList.contains('clicked'));

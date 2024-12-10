@@ -135,7 +135,7 @@ footer {
 }
 
 #city_ri {
-    background-color: rgb(76, 175, 79);
+    background-color: rgba(76, 175, 79, 0.8);
     color: rgb(0, 0, 0);
     font-size: 1.4em;
     font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
@@ -145,7 +145,7 @@ footer {
     border-radius: 15px;
     cursor: pointer;
     position: fixed;
-    top: 26%;
+    top: 23%;
     right: 5%;
 }
 

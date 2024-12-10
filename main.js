@@ -643,14 +643,24 @@ function closeTooltip() {
 
 document.addEventListener('DOMContentLoaded', () => {
     const allPathsButton = document.getElementById('allPaths');
-    // Add a click event listener to change its style
-    allPathsButton.addEventListener('click', () => {
-        allPathsButton.classList.add('clicked');
-    });
+
+    // Ursprüngliche Farben definieren
+    const originalBackgroundColor = allPathsButton.style.backgroundColor || '';
+    const originalTextColor = allPathsButton.style.color || '';
 
     allPathsButton.addEventListener('click', () => {
-        console.log("Button clicked!");
-        allPathsButton.style.backgroundColor = "darkgreen";
-        allPathsButton.style.color = "white";
+        if (allPathsButton.classList.contains('clicked')) {
+            // Zustand zurücksetzen
+            allPathsButton.classList.remove('clicked');
+            allPathsButton.style.backgroundColor = originalBackgroundColor;
+            allPathsButton.style.color = originalTextColor;
+        } else {
+            // Zustand aktivieren
+            allPathsButton.classList.add('clicked');
+            allPathsButton.style.backgroundColor = "darkgreen";
+            allPathsButton.style.color = "white";
+        }
+
+        console.log("Button clicked! Current state:", allPathsButton.classList.contains('clicked'));
     });
 });

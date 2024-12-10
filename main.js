@@ -579,11 +579,27 @@ function showAllPaths() {
             }
             console.log("Alle Pfade abgerufen:", data);
 
+            let mean_RIs = [];
+
             // Alle Pfade nacheinander zeichnen
             data.data.forEach(path => {
                 appState.pointHistory = path.points;
                 drawColoredLine();
+
+                if (appState.pointHistory.length > 0) {
+                    let mean_ri = appState.pointHistory.reduce((sum, point) => sum + (point.ri_value || 0), 0) / appState.pointHistory.length;
+                    mean_RIs.push(mean_ri);
+                } else {
+                    mean_RIs.push(null);
+                }
             });
+
+            // Durchschnittlichen RI von allen Pfaden berechnen
+            let mean_ri = mean_RIs.reduce((sum, ri) => sum + (ri || 0), 0) / mean_RIs.length;
+            console.log("Berechneter mean_ri:", mean_ri);
+
+            $("#mean_ri_value").text(mean_ri.toFixed(2));
+            $("#mean_ri").show();
         })
         .catch(error => {
             console.error("Fehler beim Abrufen aller Pfade:", error);

@@ -420,7 +420,7 @@ function stopTracking() {
                         } else {
                             $("#mean_ri_value").text("N/A");
                         }
-                        
+
                         fetch(`${app_url}update_mean_ri`, {
                             method: "POST",
                             headers: {
@@ -558,8 +558,8 @@ function register() {
 
 async function showAllPaths() {
 
-    response = await fetch(`${app_url}get_trips?user_id=${appState.user[0]}`, { method: "GET" });
-    data = await response.json();
+    const response = await fetch(`${app_url}get_trips?user_id=${appState.user[0]}`, { method: "GET" });
+    const data = await response.json();
 
     if (data.error) {
         console.error("Fehler beim Abrufen aller Pfade:", data.error);

@@ -124,6 +124,14 @@ footer {
     display: block;
 }
 
+#city_ri {
+    position: absolute;
+    top: 20%;
+    right: 10%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
 .legend {
     position: absolute;
     top: 25%;

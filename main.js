@@ -561,6 +561,8 @@ async function showAllPaths() {
 
     if (appState.showAllPathsActive) {
         console.log("Deaktivieren von Show All Paths");
+        appState.color_points.clearLayers(); // Entfernt alle farbigen Linien
+        appState.points.clearLayers();      // Entfernt alle schwarzen Linien und Punkte
         appState.showAllPathsActive = false;
     } else {
         

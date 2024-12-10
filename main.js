@@ -106,9 +106,13 @@ function onload() {
     appState.points = L.layerGroup();
     appState.color_points = L.layerGroup(); 
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    /*L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+    }).addTo(map);*/
+
+    L.tileLayer.wms("https://wms.geo.admin.ch/", {
+        layers: "ch.swisstopo.landeskarte-farbe-10", 
+    }).addTo(map)
     
     map.addLayer(appState.markers);
     map.addLayer(appState.points);

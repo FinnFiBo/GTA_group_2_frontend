@@ -558,6 +558,15 @@ function register() {
 
 async function showAllPaths() {
 
+    // Zeige eine Ladeanzeige oder ändere den Status, falls notwendig
+    console.log("Lade alle Pfade...");
+
+    // Hole die Trips nur, wenn der Button aktiv ist (wenn 'clicked' vorhanden ist)
+    if (!$('button#allPaths').hasClass('clicked')) {
+        console.log("Der Button wurde noch nicht aktiviert.");
+        return;  // Breche die Funktion ab, wenn der Button nicht geklickt wurde
+    }
+    
     const response = await fetch(`${app_url}get_trips?user_id=${appState.user[0]}`, { method: "GET" });
     const paths = await response.json();
 
@@ -648,22 +657,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const originalBackgroundColor = allPathsButton.style.backgroundColor || '';
     const originalTextColor = allPathsButton.style.color || '';
 
-    allPathsButton.addEventListener('click', () => {
+    // Button-Klick-Event-Listener
+    allPathsButton.addEventListener('click', async () => {
         if (allPathsButton.classList.contains('clicked')) {
-            // Zustand zurücksetzen
+            // Zustand zurücksetzen, Linien löschen und anzeigen ausblenden
             allPathsButton.classList.remove('clicked');
             allPathsButton.style.backgroundColor = originalBackgroundColor;
             allPathsButton.style.color = originalTextColor;
-            appState.color_points.clearLayers();   
-            $("#mean_ri").hide();
+            appState.color_points.clearLayers();  // Lösche alle gezeichneten Linien
+            $("#mean_ri").hide();  // Verstecke das mean_ri
+
         } else {
-            // Zustand aktivieren
+            // Zustand aktivieren, Button-Farbe ändern und neue Trips anzeigen
             allPathsButton.classList.add('clicked');
             allPathsButton.style.backgroundColor = "darkgreen";
             allPathsButton.style.color = "white";
+            await showAllPaths();  // Lade alle Trips neu
         }
 
         console.log("Button clicked! Current state:", allPathsButton.classList.contains('clicked'));
     });
 });
-

@@ -104,7 +104,6 @@ footer {
 #buttons-container #allPaths {
     color: rgb(255, 255, 255);
     font-weight: normal;
-    order: -1;
 }
 
 #mean_ri {
@@ -138,7 +137,7 @@ footer {
     font-size: 1.4em;
     font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
     font-weight: bold;
-    padding: 7px 17px;
+    padding: 12px 30px;
     border: none;
     border-radius: 15px;
     cursor: pointer;

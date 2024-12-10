@@ -72,9 +72,10 @@ footer {
 
 #buttons-container button {
     background-color: #4caf50;
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     font-size: 1.4em;
     font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+    font-display: bold;
     padding: 12px 30px;
     border: none;
     border-radius: 12px;
@@ -97,7 +98,7 @@ footer {
 
 #buttons-container #end {
     background-color: darkgreen;
-    color: white;
+    color: rgb(255, 255, 255);
 }
 
 #mean_ri {

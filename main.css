@@ -137,9 +137,9 @@ footer {
     font-size: 1.4em;
     font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
     font-weight: bold;
-    padding: 6px 15px;
+    padding: 7px 17px;
     border: none;
-    border-radius: 6px;
+    border-radius: 15px;
     cursor: pointer;
     position: fixed;
     top: 28%;

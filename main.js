@@ -569,7 +569,7 @@ async function showAllPaths() {
 
     let mean_RIs = [];
 
-    paths.forEach(trip_id => {
+    await paths.forEach(trip_id => {
         fetch(`${wfs}?service=WFS&version=1.0.0&request=GetFeature&typeName=GTA24_lab06:webapp_trajectory_point&outputFormat=application/json&cql_filter=trip_id=${trip_id}`, { method: "GET" })
         .then(response => response.json())
         .then(data => {
@@ -603,6 +603,8 @@ async function showAllPaths() {
         .catch(error => {
             console.error("Fehler beim Abrufen aller Pfade:", error);
         });
+    
+    console.log("mean_RIs:", mean_RIs);
     
     let mean_ri = mean_RIs.reduce((sum, ri) => sum + ri || 0, 0) / mean_RIs.length;
     console.log("Berechneter mean_ri:", mean_ri);

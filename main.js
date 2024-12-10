@@ -654,6 +654,8 @@ document.addEventListener('DOMContentLoaded', () => {
             allPathsButton.classList.remove('clicked');
             allPathsButton.style.backgroundColor = originalBackgroundColor;
             allPathsButton.style.color = originalTextColor;
+            appState.color_points.clearLayers();   
+            $("#mean_ri").hide();
         } else {
             // Zustand aktivieren
             allPathsButton.classList.add('clicked');

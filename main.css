@@ -125,7 +125,7 @@ footer {
 
 #mean_ri .mean-value {
     color: rgb(255, 255, 255);
-    font-weight: bold;
+    font-weight: normal;
     margin-top: 5px;
     display: block;
 }
@@ -146,7 +146,7 @@ footer {
 
 #city_ri .city-value {
     color: rgb(255, 255, 255);
-    font-weight: bold;
+    font-weight: normal;
     margin-top: 5px;
     display: block;
     text-align: center; 

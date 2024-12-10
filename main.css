@@ -158,7 +158,7 @@ footer {
     position: absolute;
     top: 25%;
     left: 10px;
-    background: white;
+    background: rgba(255, 255, 255, 0.507);
     padding: 10px;
     font-size: 14px;
     font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;

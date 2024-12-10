@@ -389,6 +389,7 @@ function stopTracking() {
 
 
     $("#start").show(); // Zeigt den "Start"-Button
+    $("#allPaths").show();
     $("#end").hide(); 
     $(".legend").show();
 

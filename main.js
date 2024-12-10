@@ -124,7 +124,6 @@ function onload() {
     });
 
 	$("#start").click(startTracking);
-    $("#allPaths").show();
     $("#allPaths").click(showAllPaths);
     $("#end").click(stopTracking).hide();
     $("#mean_ri").hide();

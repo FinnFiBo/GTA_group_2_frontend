@@ -561,13 +561,13 @@ async function showAllPaths() {
     const response = await fetch(`${app_url}get_trips?user_id=${appState.user[0]}`, { method: "GET" });
     const data = await response.json();
 
-    if (data.error) {
-        console.error("Fehler beim Abrufen aller Pfade:", data.error);
+    if (paths.error) {
+        console.error("Fehler beim Abrufen aller Pfade:", paths.error);
         return;
     }
-    console.log("Alle Pfade abgerufen:", data);
+    console.log("Alle Pfade abgerufen:", paths);
 
-    data.forEach(trip_id => {
+    paths.forEach(trip_id => {
         fetch(`${wfs}?service=WFS&version=1.0.0&request=GetFeature&typeName=GTA24_lab06:webapp_trajectory_point&outputFormat=application/json&cql_filter=trip_id=${trip_id}`, { method: "GET" })
         .then(response => response.json())
         .then(data => {
@@ -599,6 +599,8 @@ async function showAllPaths() {
                     mean_RIs.push(null);
                 }
             });
+
+            console.log("Berechnete mean_RIs:", mean_RIs);
 
             let mean_ri = mean_RIs.reduce((sum, ri) => sum + (ri || 0), 0) / mean_RIs.length;
             console.log("Berechneter mean_ri:", mean_ri);

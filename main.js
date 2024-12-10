@@ -420,35 +420,36 @@ function stopTracking() {
                         } else {
                             $("#mean_ri_value").text("N/A");
                         }
+                        
+                        fetch(`${app_url}update_mean_ri`, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                trip_id: appState.trip_id,
+                                mean_ri: appState.mean_ri
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.error) {
+                                console.error("Fehler beim Aktualisieren von mean_ri:", data.error);
+                            } else {
+                                console.log("mean_ri erfolgreich aktualisiert:", data);
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Fehler beim Aktualisieren von mean_ri:", error);
+                        });
+                        
+                        $("#mean_ri").show();
+                        
+                        appState.mean_ri = null;
                     })
 
                 // Berechnung des Durchschnitts (mean_ri)
 
-                fetch(`${app_url}update_mean_ri`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        trip_id: appState.trip_id,
-                        mean_ri: appState.mean_ri
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        console.error("Fehler beim Aktualisieren von mean_ri:", data.error);
-                    } else {
-                        console.log("mean_ri erfolgreich aktualisiert:", data);
-                    }
-                })
-                .catch(error => {
-                    console.error("Fehler beim Aktualisieren von mean_ri:", error);
-                });
-                
-                $("#mean_ri").show();
-                
-                appState.mean_ri = null;
                                 
             })
             .catch(error => {

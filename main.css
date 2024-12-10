@@ -126,7 +126,7 @@ footer {
 
 #city_ri {
     position: absolute;
-    top: 80%;
+    bottom: 10%;
     right: 10%;
     z-index: 10;
 }

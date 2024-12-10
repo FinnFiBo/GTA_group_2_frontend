@@ -604,6 +604,8 @@ async function showAllPaths() {
             console.error("Fehler beim Abrufen aller Pfade:", error);
         });
     
+    console.log("mean_RIs:", mean_RIs);
+    
     let mean_ri = mean_RIs.reduce((sum, ri) => sum + ri || 0, 0) / mean_RIs.length;
     console.log("Berechneter mean_ri:", mean_ri);
     $("#mean_ri_value").text(mean_ri.toFixed(2));

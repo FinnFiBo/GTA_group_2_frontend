@@ -140,16 +140,11 @@ footer {
     right: 5%;
 }
 
-#city_ri:hover {
-    background-color: #388e3c;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
-    transform: translateY(-2px);
-}
-
-#city_ri:active {
-    transform: translateY(2px);
-    color: darkgreen;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+#city_ri .city-value {
+    color: rgb(255, 255, 255);
+    font-weight: normal;
+    margin-top: 5px;
+    display: block;
 }
 
 .legend {

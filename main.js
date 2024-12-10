@@ -9,7 +9,8 @@ let appState = {
 	trip_id: null,
     points: null,
     color_points: null,
-    pointHistory: [],
+    lastPoint: null,
+    pointHistory: null,
     currentZoom: 8,
     isTracking: false,
     mean_ri: null,
@@ -266,18 +267,18 @@ function insertPoint(lat, lng, time, trip_id, ri_value, noise, distance) {
             appState.points.addLayer(point);
 
            // Zeichnet schwarze Linie zwischen den Punkten
-           if (appState.pointHistory.length > 0) {
-            let lastPoint = appState.pointHistory[appState.pointHistory.length - 1];
+           if (appState.lastPoint) {
+            let lastPoint = appState.lastPoint;
             let latLngs = [
                 [lastPoint.lat, lastPoint.lng],  // Letzter Punkt
                 [lat, lng]                       // Neuer Punkt
             ];
 
-            let polyline = L.polyline(latLngs, { color: 'black' }).addTo(appState.points);
+            L.polyline(latLngs, { color: 'black' }).addTo(appState.points);
         }
 
         // Den aktuellen Punkt zur Historie hinzufügen
-        appState.pointHistory.push({ lat: lat, lng: lng, ri_value: ri_value });
+        appState.lastPoint = { lat: lat, lng: lng, ri_value: ri_value };
         resolve(); // Promise auflösen
     },
 
@@ -313,7 +314,8 @@ function startTracking() {
     if (appState.isTracking) {
         return;
     }
- 
+    
+    // Verstecke den "Start"-Button und zeige den "End"-Button und die "mean_ri"-Anzeige
     $("#start").hide();
     $("#allPaths").hide(); 
     $("#end").show();  
@@ -354,7 +356,6 @@ function startTracking() {
             map.setView(appState.latLng, 15); 
         }
 
-        appState.pointHistory = [];
         appState.isTracking = true;
         appState.color_points.clearLayers();
         
@@ -407,19 +408,21 @@ function stopTracking() {
                             console.error("Fehler beim Abrufen der Punkte:", data.error);
                             return;
                         }
+                        appState.lastPoint = null;
                         appState.pointHistory = data.points;
                         drawColoredLine();
+
+                        if (appState.pointHistory.length > 0) {
+                            let mean_ri = appState.pointHistory.reduce((sum, point) => sum + (point.ri_value || 0), 0) / appState.pointHistory.length;
+                            appState.mean_ri = mean_ri
+                            console.log("Berechneter mean_ri:", mean_ri); 
+                            $("#mean_ri_value").text(mean_ri.toFixed(2));
+                        } else {
+                            $("#mean_ri_value").text("N/A");
+                        }
                     })
 
                 // Berechnung des Durchschnitts (mean_ri)
-                if (appState.pointHistory.length > 0) {
-                    let mean_ri = appState.pointHistory.reduce((sum, point) => sum + (point.ri_value || 0), 0) / appState.pointHistory.length;
-                    appState.mean_ri = mean_ri
-                    console.log("Berechneter mean_ri:", mean_ri); 
-                    $("#mean_ri_value").text(mean_ri.toFixed(2));
-                } else {
-                    $("#mean_ri_value").text("N/A");
-                }
 
                 fetch(`${app_url}update_mean_ri`, {
                     method: "POST",
@@ -478,7 +481,7 @@ async function get_ri(latlng) {
 }
 
 function login() {
-
+    // Verhindert Probleme, falls der Benutzer mehrmals auf den Login-Button klickt
     if (appState.isLoggingIn) {
         return;
     }
@@ -487,9 +490,11 @@ function login() {
         appState.isLoggingIn = false;
     }, 3000);
 
+    // Benutzername und Passwort aus den Eingabefeldern abrufen
     let username = document.getElementById("login-username").value;
     let password = hashPassword(document.getElementById("login-password").value);
 
+    // Anfrage an den Server senden, einen Benutzer mit den angegebenen Anmeldeinformationen zu finden
     fetch(`${app_url}login?username=${username}&password=${password}`, {
         method: "GET",
     })
@@ -500,8 +505,11 @@ function login() {
             return;
         }
 
+        // Benutzer erfolgreich eingeloggt
         console.log("Erfolgreich eingeloggt:", data);
         appState.user = data;
+
+        // Eingabefelder leeren und Authentifizierungscontainer ausblenden
         document.getElementById("login-username").value = "";
         document.getElementById("login-password").value = "";
 
@@ -511,42 +519,57 @@ function login() {
 }
 
 function register() {
-    
-        if (appState.isRegistering) {
+    // Verhindert Probleme, falls der Benutzer mehrmals auf den Registrierungs-Button klickt
+    if (appState.isRegistering) {
+        return;
+    }
+    appState.isRegistering = true;
+    setTimeout(() => {
+        appState.isRegistering = false;
+    }, 3000);
+
+    // Benutzername und Passwort aus den Eingabefeldern abrufen
+    let username = document.getElementById("register-username").value;
+    let password = hashPassword(document.getElementById("register-password").value);
+
+    // Anfrage an den Server senden, um einen neuen Benutzer mit den angegebenen Registrierungsinformationen zu erstellen
+    fetch(`${app_url}register?username=${username}&password=${password}`, {
+        method: "GET",
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            console.error("Fehler beim Registrieren:", data.error);
             return;
         }
-        appState.isRegistering = true;
-        setTimeout(() => {
-            appState.isRegistering = false;
-        }, 3000);
-    
-        let username = document.getElementById("register-username").value;
-        let password = hashPassword(document.getElementById("register-password").value);
-    
-        fetch(`${app_url}register?username=${username}&password=${password}`, {
-            method: "GET",
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                console.error("Fehler beim Registrieren:", data.error);
-                return;
-            }
-    
-            console.log("Erfolgreich registriert:", data);
-            appState.user = data.user;
-            document.getElementById("register-username").value = "";
-            document.getElementById("register-password").value = "";
-    
-            document.getElementById("auth-container").style.display = "none";
-        })
+        // Benutzer erfolgreich registriert
+
+        console.log("Erfolgreich registriert:", data);
+        appState.user = data.user;
+
+        // Eingabefelder leeren und Authentifizierungscontainer ausblenden
+        document.getElementById("register-username").value = "";
+        document.getElementById("register-password").value = "";
+
+        document.getElementById("auth-container").style.display = "none";
+    })
 }
 
 function showAllPaths() {
+    // Verhindert Probleme, falls der Benutzer mehrmals auf den "Alle Pfade"-Button klickt
+    if (appState.isShowingPaths) {
+        return;
+    }
+    appState.isShowingPaths = true;
+    setTimeout(() => {
+        appState.isShowingPaths = false;
+    }, 3000);
 
+    // Verstecke  die "mean_ri"-Anzeige und zeige die Legende
     $("#mean_ri").hide();
     $(".legend").show();
 
+    // Alle Wege abrufen, die der Benutzer bisher zurückgelegt hat
     fetch(`${app_url}all_paths?user_id=${appState.user[0]}`, { method: "GET" })
         .then(response => response.json())
         .then(data => {
@@ -556,6 +579,7 @@ function showAllPaths() {
             }
             console.log("Alle Pfade abgerufen:", data);
 
+            // Alle Pfade nacheinander zeichnen
             data.data.forEach(path => {
                 appState.pointHistory = path.points;
                 drawColoredLine();
@@ -567,6 +591,7 @@ function showAllPaths() {
 }
 
 function hashPassword(password) {
+    // Einfache Hash-Funktion für das Passwort zur übertragung
     let hash = 0;
     if (password.length === 0) return hash.toString();
     for (let i = 0; i < password.length; i++) {
@@ -578,6 +603,7 @@ function hashPassword(password) {
 }
 
 function toggleTooltip() {
+    // Zeigt oder versteckt das Tooltip-Element
     const tooltip = document.querySelector('.tooltip');
     if (tooltip) {
         tooltip.classList.toggle('visible');
@@ -585,6 +611,7 @@ function toggleTooltip() {
 }
 
 function closeTooltip() {
+    // Versteckt das Tooltip-Element
     const tooltip = document.querySelector('.tooltip');
     if (tooltip) {
         tooltip.classList.remove('visible');

@@ -641,14 +641,16 @@ function closeTooltip() {
     }
 }
 
-const allPathsButton = document.getElementById('allPaths');
+document.addEventListener('DOMContentLoaded', () => {
+    const allPathsButton = document.getElementById('allPaths');
     // Add a click event listener to change its style
     allPathsButton.addEventListener('click', () => {
         allPathsButton.classList.add('clicked');
     });
 
-allPathsButton.addEventListener('click', () => {
-    console.log("Button clicked!");
-    allPathsButton.style.backgroundColor = "darkgreen";
-    allPathsButton.style.color = "white";
+    allPathsButton.addEventListener('click', () => {
+        console.log("Button clicked!");
+        allPathsButton.style.backgroundColor = "darkgreen";
+        allPathsButton.style.color = "white";
+    });
 });

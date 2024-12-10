@@ -646,3 +646,9 @@ const allPathsButton = document.getElementById('allPaths');
     allPathsButton.addEventListener('click', () => {
         allPathsButton.classList.add('clicked');
     });
+
+allPathsButton.addEventListener('click', () => {
+    console.log("Button clicked!");
+    allPathsButton.style.backgroundColor = "darkgreen";
+    allPathsButton.style.color = "white";
+});

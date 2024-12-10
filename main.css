@@ -39,7 +39,7 @@ h1 {
 }
 
 footer {
-    color: #ffffff;
+    color: #00550e;
     background: #4caf50;
     padding: 8px 15px; 
     font-size: 0.6em; 
@@ -125,13 +125,13 @@ footer {
 }
 
 #city_ri {
-    background-color: rgba(76, 175, 80, 0.8);
+    background-color: rgba(76, 175, 80, 0.7);
     color: rgb(0, 0, 0);
     font-size: 1.4em;
     font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
-    padding: 12px 30px;
+    padding: 6px 15px;
     border: none;
-    border-radius: 12px;
+    border-radius: 6px;
     cursor: pointer;
     position: fixed;
     top: 28%;

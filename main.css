@@ -110,8 +110,8 @@ footer {
 }
 
 .clicked {
-    background-color: darkgreen !important;
-    color: white !important;
+    background-color: darkgreen;
+    color: white;
 }
 
 #mean_ri {

@@ -642,7 +642,6 @@ function closeTooltip() {
 }
 
 const allPathsButton = document.getElementById('allPaths');
-    
     // Add a click event listener to change its style
     allPathsButton.addEventListener('click', () => {
         allPathsButton.classList.add('clicked');

@@ -569,7 +569,7 @@ async function showAllPaths() {
 
     let mean_RIs = [];
 
-    paths.forEach(trip_id => {
+    await paths.forEach(trip_id => {
         fetch(`${wfs}?service=WFS&version=1.0.0&request=GetFeature&typeName=GTA24_lab06:webapp_trajectory_point&outputFormat=application/json&cql_filter=trip_id=${trip_id}`, { method: "GET" })
         .then(response => response.json())
         .then(data => {

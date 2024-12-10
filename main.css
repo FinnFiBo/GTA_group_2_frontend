@@ -109,6 +109,11 @@ footer {
     font-weight: normal;
 }
 
+.clicked {
+    background-color: darkgreen !important;
+    color: white !important;
+}
+
 #mean_ri {
     background-color: #4caf50;
     color: rgb(0, 0, 0);

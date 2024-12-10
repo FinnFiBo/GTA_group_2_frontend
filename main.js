@@ -558,13 +558,6 @@ function register() {
 
 async function showAllPaths() {
 
-    // Hole die Trips nur, wenn der Button aktiv ist (wenn 'clicked' vorhanden ist)
-    if (!$('button#allPaths').hasClass('clicked')) {
-        console.log("Der Button wurde noch nicht aktiviert.");
-        return;  // Breche die Funktion ab, wenn der Button nicht geklickt wurde
-    }
-
-    
     const response = await fetch(`${app_url}get_trips?user_id=${appState.user[0]}`, { method: "GET" });
     const paths = await response.json();
 

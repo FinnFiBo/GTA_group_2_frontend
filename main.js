@@ -558,14 +558,12 @@ function register() {
 
 async function showAllPaths() {
 
-    // Zeige eine Ladeanzeige oder ändere den Status, falls notwendig
-    console.log("Lade alle Pfade...");
-
     // Hole die Trips nur, wenn der Button aktiv ist (wenn 'clicked' vorhanden ist)
     if (!$('button#allPaths').hasClass('clicked')) {
         console.log("Der Button wurde noch nicht aktiviert.");
         return;  // Breche die Funktion ab, wenn der Button nicht geklickt wurde
     }
+
     
     const response = await fetch(`${app_url}get_trips?user_id=${appState.user[0]}`, { method: "GET" });
     const paths = await response.json();
@@ -660,19 +658,31 @@ document.addEventListener('DOMContentLoaded', () => {
     // Button-Klick-Event-Listener
     allPathsButton.addEventListener('click', async () => {
         if (allPathsButton.classList.contains('clicked')) {
-            // Zustand zurücksetzen, Linien löschen und anzeigen ausblenden
+            // Wenn der Button deaktiviert wird, entferne die Trips
+            console.log("Button deaktiviert, entferne alle Trips.");
+
+            // Zustand zurücksetzen
             allPathsButton.classList.remove('clicked');
             allPathsButton.style.backgroundColor = originalBackgroundColor;
             allPathsButton.style.color = originalTextColor;
-            appState.color_points.clearLayers();  // Lösche alle gezeichneten Linien
-            $("#mean_ri").hide();  // Verstecke das mean_ri
+
+            // Alle gezeichneten Linien entfernen
+            appState.color_points.clearLayers(); 
+
+            // Verstecke das mean_ri
+            $("#mean_ri").hide(); 
 
         } else {
-            // Zustand aktivieren, Button-Farbe ändern und neue Trips anzeigen
+            // Wenn der Button aktiviert wird, lade die Trips neu
+            console.log("Button aktiviert, lade alle Trips.");
+
+            // Zustand aktivieren
             allPathsButton.classList.add('clicked');
             allPathsButton.style.backgroundColor = "darkgreen";
             allPathsButton.style.color = "white";
-            await showAllPaths();  // Lade alle Trips neu
+
+            // Zeige alle Trips
+            await showAllPaths();  
         }
 
         console.log("Button clicked! Current state:", allPathsButton.classList.contains('clicked'));

@@ -74,11 +74,11 @@ footer {
 
 
 #buttons-container #start {
-    margin-right: 40px; /* Abstand zwischen #start und #allPaths */
+    margin-right: 40px; 
 }
 
 #buttons-container #allPaths {
-    margin-left: 0; /* Falls nötig, stelle sicher, dass kein zusätzlicher Abstand hier ist */
+    margin-left: 0;
 }
 
 #buttons-container button {

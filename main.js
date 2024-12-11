@@ -17,6 +17,7 @@ let appState = {
 };
 
 let wfs = 'https://baug-ikg-gis-01.ethz.ch:8443/geoserver/GTA24_lab06/wfs';
+let wms = 'https://baug-ikg-gis-01.ethz.ch:8443/geoserver/GTA24_lab06/wms';
 let app_url = 'https://gta-project-group-2.vercel.app/';
 let timer = null;
 let isButtonClicked = false;
@@ -138,6 +139,8 @@ function onload() {
         document.querySelectorAll(".auth-form")[1].style.display = "none";
         document.querySelectorAll(".auth-form")[0].style.display = "block";
     });
+
+    calculateCityRi();
 }
 
 function getColorByRI(riValue) {
@@ -645,4 +648,12 @@ function closeTooltip() {
     if (tooltip) {
         tooltip.classList.remove('visible');
     }
+}
+
+async function calculateCityRi() {
+    // Berechnet den RI-Wert für alle Trips
+    const response = await fetch(`${wms}?service=WMS&version=1.1.0&request=GetMap&layers=GTA24_lab06:city_ri&styles=&bbox=8.5,47.3,8.6,47.4&width=256&height=256&srs=EPSG:4326&format=image/png`, { method: "GET" });
+    const data = await response.blob();
+    const url = URL.createObjectURL(data);
+    document.getElementById("city-ri").src = url;
 }

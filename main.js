@@ -140,7 +140,9 @@ function onload() {
         document.querySelectorAll(".auth-form")[0].style.display = "block";
     });
 
-    calculateCityRi();
+    calculateCityRi().then(() => {
+        console.log("Stadt-RI berechnet");
+    });
 }
 
 function getColorByRI(riValue) {

@@ -108,6 +108,7 @@ footer {
 
 #buttons-container #allPaths {
     font-weight: normal;
+    margin-left: 20px;
 }
 
 .clicked {

@@ -103,6 +103,7 @@ footer {
 
 #buttons-container #start {
     background-color: rgb(0, 220, 0);
+    margin-bottom: 30px;
 }
 
 #buttons-container #allPaths {

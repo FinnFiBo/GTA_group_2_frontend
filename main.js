@@ -561,9 +561,13 @@ async function showAllPaths() {
     // Button-Design ändern
     allPathsButton = document.getElementById("allPaths");
 
-    allPathsButton.onclick = function() {document.getElementById("allPaths").onclick = showAllPaths; document.getElementById("allPaths").style.backgroundColor = "lightgreen"; document.getElementById("allPaths").style.color = "white";};
-    allPathsButton.style.backgroundColor = "darkgreen";
-    allPathsButton.style.color = "white";
+    allPathsButton.onclick = function() {
+        allPathsButton = document.getElementById("allPaths");
+        allPathsButton.classList.remove("clicked");
+        showAllPaths();
+    };
+    
+    allPathsButton.classList.add("clicked")
 
     console.log("showAllPaths wird ausgeführt...");
 
@@ -649,47 +653,3 @@ function closeTooltip() {
         tooltip.classList.remove('visible');
     }
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    const allPathsButton = document.getElementById('allPaths');
-    let isButtonClicked = false;
-
-    // Ursprüngliche Farben definieren
-    const originalBackgroundColor = allPathsButton.style.backgroundColor || '';
-    const originalTextColor = allPathsButton.style.color || '';
-
-    // Button-Klick-Event-Listener
-    allPathsButton.addEventListener('click', async () => {
-        if (isButtonClicked) {
-            console.log("Button deaktiviert, entferne alle Trips.");
-
-            // Button deaktivieren
-            isButtonClicked = false;
-            allPathsButton.classList.remove('clicked');
-            allPathsButton.style.backgroundColor = originalBackgroundColor;
-            allPathsButton.style.color = originalTextColor;
-
-            // Alle gezeichneten Linien entfernen
-            appState.color_points.clearLayers();
-
-            // Verstecke das mean_ri
-            $("#mean_ri").hide();
-            $("#allPaths").click(showAllPaths);
-        } else {
-            console.log("Button aktiviert, lade alle Trips.");
-
-            // Button aktivieren
-            isButtonClicked = true;
-            allPathsButton.classList.add('clicked');
-            allPathsButton.style.backgroundColor = "darkgreen";
-            allPathsButton.style.color = "white";
-
-            // Zeige alle Trips
-            try {
-                await showAllPaths();
-            } catch (error) {
-                console.error("Fehler bei showAllPaths:", error);
-            }
-        }
-    });
-});

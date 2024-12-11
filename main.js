@@ -565,6 +565,8 @@ async function showAllPaths() {
         allPathsButton.classList.remove("clicked");
         appState.color_points.clearLayers();
         appState.points.clearLayers();
+        $("#mean_ri").hide();
+        $(".legend").hide();
         return;
     }
 
@@ -623,6 +625,7 @@ async function showAllPaths() {
     console.log("Berechneter mean_ri:", mean_ri);
     $("#mean_ri_value").text(mean_ri.toFixed(2));
     $("#mean_ri").show();
+    $(".legend").show();
     });
 }
 

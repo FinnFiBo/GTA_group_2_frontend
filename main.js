@@ -140,6 +140,7 @@ function onload() {
         document.querySelectorAll(".auth-form")[0].style.display = "block";
     });
 
+    console.log("App geladen");
     calculateCityRi().then(() => {
         console.log("Stadt-RI berechnet");
     });

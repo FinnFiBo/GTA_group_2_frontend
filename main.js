@@ -560,6 +560,7 @@ function register() {
 async function showAllPaths() {
     // Button-Design ändern
     allPathsButton = document.getElementById("allPaths");
+    $("#mean_ri").show();
 
     if (allPathsButton.classList.contains("clicked")) {
         allPathsButton.classList.remove("clicked");
@@ -609,6 +610,7 @@ async function showAllPaths() {
             if (appState.pointHistory.length > 0) {
                 let mean_ri = appState.pointHistory.reduce((sum, point) => sum + (point.ri_value || 0), 0) / appState.pointHistory.length;
                 mean_RIs.push(mean_ri);
+                $("#mean_ri_value").text(mean_ri.toFixed(2));
             } else {
                 mean_RIs.push(null);
             }

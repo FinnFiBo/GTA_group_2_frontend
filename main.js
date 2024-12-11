@@ -18,7 +18,7 @@ let appState = {
 
 let wfs = 'https://baug-ikg-gis-01.ethz.ch:8443/geoserver/GTA24_lab06/wfs';
 let wms = 'https://baug-ikg-gis-01.ethz.ch:8443/geoserver/GTA24_lab06/wms';
-let app_url = 'http://127.0.0.1:8989';
+let app_url = 'http://127.0.0.1:8989/';
 let timer = null;
 let isButtonClicked = false;
 
@@ -654,11 +654,19 @@ function closeTooltip() {
     }
 }
 
-async function calculateCityRi() {
+function calculateCityRi() {
     // Berechnet den RI-Wert für alle Trips
-    const response = await fetch(`${wms}?service=WMS&version=1.1.0&request=GetMap&layers=GTA24_lab06:city_ri&styles=&bbox=8.5,47.3,8.6,47.4&width=256&height=256&srs=EPSG:4326&format=image/png`, { method: "GET" });
-    const data = await response.blob();
-    console.log("Stadt-RI-Bild abgerufen:", data);
-    const url = URL.createObjectURL(data);
-    document.getElementById("city-ri").src = url;
+    fetch(`${app_url}city_ri`, { method: "GET" })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                console.error("Fehler beim Berechnen des Stadt-RI:", data.error);
+                return;
+            }
+            console.log("Stadt-RI berechnet:", data);
+            document.getElementById("city_value").innerText = data.ri.toFixed(2);
+        })
+        .catch(error => {
+            console.error("Fehler beim Berechnen des Stadt-RI:", error);
+        });
 }

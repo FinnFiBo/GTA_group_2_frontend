@@ -19,6 +19,7 @@ let appState = {
 let wfs = 'https://baug-ikg-gis-01.ethz.ch:8443/geoserver/GTA24_lab06/wfs';
 let app_url = 'https://gta-project-group-2.vercel.app/';
 let timer = null;
+let isButtonClicked = false;
 
 
 function drawMarkers() {
@@ -562,7 +563,7 @@ async function showAllPaths() {
         console.log("showAllPaths nicht ausgeführt, da isButtonClicked = false.");
         return;
     }
-    
+
     const response = await fetch(`${app_url}get_trips?user_id=${appState.user[0]}`, { method: "GET" });
     const paths = await response.json();
 
@@ -648,7 +649,6 @@ function closeTooltip() {
 
 document.addEventListener('DOMContentLoaded', () => {
     const allPathsButton = document.getElementById('allPaths');
-    let isButtonClicked = false; // Zustandsvariable
 
     // Ursprüngliche Farben definieren
     const originalBackgroundColor = allPathsButton.style.backgroundColor || '';
@@ -659,17 +659,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isButtonClicked) {
             // Button deaktivieren: Entferne gezeichnete Trips und setze Button zurück
             console.log("Button deaktiviert, entferne alle Trips.");
-            
+
             isButtonClicked = false;
             allPathsButton.classList.remove('clicked');
             allPathsButton.style.backgroundColor = originalBackgroundColor;
             allPathsButton.style.color = originalTextColor;
 
             // Alle gezeichneten Linien entfernen
-            appState.color_points.clearLayers(); 
+            appState.color_points.clearLayers();
 
             // Verstecke das mean_ri
-            $("#mean_ri").hide(); 
+            $("#mean_ri").hide();
         } else {
             // Button aktivieren: Zeige alle Trips und färbe den Button dunkelgrün
             console.log("Button aktiviert, lade alle Trips.");
@@ -680,7 +680,7 @@ document.addEventListener('DOMContentLoaded', () => {
             allPathsButton.style.color = "white";
 
             // Zeige alle Trips
-            await showAllPaths();  
+            await showAllPaths();
         }
     });
 });

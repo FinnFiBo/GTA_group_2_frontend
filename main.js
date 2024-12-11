@@ -561,14 +561,14 @@ async function showAllPaths() {
     // Button-Design ändern
     allPathsButton = document.getElementById("allPaths");
 
-    allPathsButton.onclick = function() {
-        allPathsButton = document.getElementById("allPaths");
+    if (allPathsButton.classList.contains("clicked")) {
         allPathsButton.classList.remove("clicked");
-        showAllPaths();
-    };
-    
-    allPathsButton.classList.add("clicked")
+        appState.color_points.clearLayers();
+        appState.points.clearLayers();
+        return;
+    }
 
+    allPathsButton.classList.add("clicked")
     console.log("showAllPaths wird ausgeführt...");
 
     const response = await fetch(`${app_url}get_trips?user_id=${appState.user[0]}`, { method: "GET" });

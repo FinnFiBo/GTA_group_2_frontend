@@ -558,6 +558,11 @@ function register() {
 
 async function showAllPaths() {
 
+    if (!isButtonClicked) {
+        console.log("showAllPaths nicht ausgeführt, da isButtonClicked = false.");
+        return;
+    }
+    
     const response = await fetch(`${app_url}get_trips?user_id=${appState.user[0]}`, { method: "GET" });
     const paths = await response.json();
 

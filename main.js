@@ -588,7 +588,6 @@ async function showAllPaths() {
     for (let i = 0; i < trip_ids.length; i++) {
         const response = await fetch(`${wfs}?service=WFS&version=1.0.0&request=GetFeature&typeName=GTA24_lab06:webapp_trajectory_point&outputFormat=application/json&cql_filter=trip_id=${trip_ids[i]}`, { method: "GET" })
         const data = await response.json();
-        console.log("Alle Punkte abgerufen:", data);
         let paths = {};
 
         data.features.forEach(feature => {
@@ -618,10 +617,7 @@ async function showAllPaths() {
         });
     }
     
-    console.log("mean_RIs:", mean_RIs);
-    
     let mean_ri = mean_RIs.reduce((sum, ri) => sum + ri || 0, 0) / mean_RIs.length;
-    console.log("Berechneter mean_ri:", mean_ri);
     $("#mean_ri_value").text(mean_ri.toFixed(2));
     $("#mean_ri").show();
     $(".legend").show();

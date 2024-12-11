@@ -63,12 +63,15 @@ footer {
 }
 
 #buttons-container {
+    display: flex;
+    flex-direction: row;
     position: fixed;
     top: 15%;
     right: 5%;
-    gap: 20px;
-    z-index: 2; 
+    z-index: 2;
+    gap: 30px;
 }
+
 
 #buttons-container button {
     background-color: #4caf50;

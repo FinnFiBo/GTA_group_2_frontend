@@ -402,51 +402,51 @@ function stopTracking() {
 
                 //Get point history
                 fetch(`${app_url}point_history?trip_id=${appState.trip_id}`, { method : "GET" })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Punkte abgerufen:", data);
+                    if (data.error) {
+                        console.error("Fehler beim Abrufen der Punkte:", data.error);
+                        return;
+                    }
+                    appState.lastPoint = null;
+                    appState.pointHistory = data.points;
+                    drawColoredLine();
+
+                    if (appState.pointHistory.length > 0) {
+                        let mean_ri = appState.pointHistory.reduce((sum, point) => sum + (point.ri_value || 0), 0) / appState.pointHistory.length;
+                        appState.mean_ri = mean_ri
+                        console.log("Berechneter mean_ri:", mean_ri); 
+                        $("#mean_ri_value").text(mean_ri.toFixed(2));
+                    } else {
+                        $("#mean_ri_value").text("N/A");
+                    }
+
+                    fetch(`${app_url}update_mean_ri`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            trip_id: appState.trip_id,
+                            mean_ri: appState.mean_ri
+                        })
+                    })
                     .then(response => response.json())
                     .then(data => {
-                        console.log("Punkte abgerufen:", data);
                         if (data.error) {
-                            console.error("Fehler beim Abrufen der Punkte:", data.error);
-                            return;
-                        }
-                        appState.lastPoint = null;
-                        appState.pointHistory = data.points;
-                        drawColoredLine();
-
-                        if (appState.pointHistory.length > 0) {
-                            let mean_ri = appState.pointHistory.reduce((sum, point) => sum + (point.ri_value || 0), 0) / appState.pointHistory.length;
-                            appState.mean_ri = mean_ri
-                            console.log("Berechneter mean_ri:", mean_ri); 
-                            $("#mean_ri_value").text(mean_ri.toFixed(2));
+                            console.error("Fehler beim Aktualisieren von mean_ri:", data.error);
                         } else {
-                            $("#mean_ri_value").text("N/A");
+                            console.log("mean_ri erfolgreich aktualisiert:", data);
                         }
-
-                        fetch(`${app_url}update_mean_ri`, {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({
-                                trip_id: appState.trip_id,
-                                mean_ri: appState.mean_ri
-                            })
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.error) {
-                                console.error("Fehler beim Aktualisieren von mean_ri:", data.error);
-                            } else {
-                                console.log("mean_ri erfolgreich aktualisiert:", data);
-                            }
-                        })
-                        .catch(error => {
-                            console.error("Fehler beim Aktualisieren von mean_ri:", error);
-                        });
-                        
-                        $("#mean_ri").show();
-                        
-                        appState.mean_ri = null;
+                    })
+                    .catch(error => {
+                        console.error("Fehler beim Aktualisieren von mean_ri:", error);
+                    });
+                    
+                    $("#mean_ri").show();
+                    
+                    appState.mean_ri = null;
                     })
 
                 // Berechnung des Durchschnitts (mean_ri)
@@ -559,6 +559,8 @@ function register() {
 
 async function showAllPaths() {
 
+    $("#allPaths").click(function() {return 0;});
+
     console.log("showAllPaths wird ausgeführt...");
 
     const response = await fetch(`${app_url}get_trips?user_id=${appState.user[0]}`, { method: "GET" });
@@ -668,6 +670,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Verstecke das mean_ri
             $("#mean_ri").hide();
+            $("#allPaths").click(showAllPaths);
         } else {
             console.log("Button aktiviert, lade alle Trips.");
 

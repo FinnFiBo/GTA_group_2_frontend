@@ -643,6 +643,7 @@ function closeTooltip() {
 
 document.addEventListener('DOMContentLoaded', () => {
     const allPathsButton = document.getElementById('allPaths');
+    let isButtonClicked = false; // Zustandsvariable
 
     // Ursprüngliche Farben definieren
     const originalBackgroundColor = allPathsButton.style.backgroundColor || '';
@@ -650,10 +651,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Button-Klick-Event-Listener
     allPathsButton.addEventListener('click', async () => {
-        if (allPathsButton.classList.contains('clicked')) {
+        if (isButtonClicked) {
             // Button deaktivieren: Entferne gezeichnete Trips und setze Button zurück
             console.log("Button deaktiviert, entferne alle Trips.");
             
+            isButtonClicked = false;
             allPathsButton.classList.remove('clicked');
             allPathsButton.style.backgroundColor = originalBackgroundColor;
             allPathsButton.style.color = originalTextColor;
@@ -663,11 +665,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Verstecke das mean_ri
             $("#mean_ri").hide(); 
-
         } else {
             // Button aktivieren: Zeige alle Trips und färbe den Button dunkelgrün
             console.log("Button aktiviert, lade alle Trips.");
 
+            isButtonClicked = true;
             allPathsButton.classList.add('clicked');
             allPathsButton.style.backgroundColor = "darkgreen";
             allPathsButton.style.color = "white";

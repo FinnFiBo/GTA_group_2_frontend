@@ -69,9 +69,17 @@ footer {
     top: 15%;
     right: 5%;
     z-index: 2;
-    gap: 30px;
+    gap: 0;
 }
 
+
+#buttons-container #start {
+    margin-right: 40px; /* Abstand zwischen #start und #allPaths */
+}
+
+#buttons-container #allPaths {
+    margin-left: 0; /* Falls nötig, stelle sicher, dass kein zusätzlicher Abstand hier ist */
+}
 
 #buttons-container button {
     background-color: #4caf50;

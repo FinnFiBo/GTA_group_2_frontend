@@ -559,10 +559,7 @@ function register() {
 
 async function showAllPaths() {
 
-    if (!isButtonClicked) {
-        console.log("showAllPaths nicht ausgeführt, da isButtonClicked = false.");
-        return;
-    }
+    console.log("showAllPaths wird ausgeführt...");
 
     const response = await fetch(`${app_url}get_trips?user_id=${appState.user[0]}`, { method: "GET" });
     const paths = await response.json();
@@ -649,6 +646,7 @@ function closeTooltip() {
 
 document.addEventListener('DOMContentLoaded', () => {
     const allPathsButton = document.getElementById('allPaths');
+    let isButtonClicked = false;
 
     // Ursprüngliche Farben definieren
     const originalBackgroundColor = allPathsButton.style.backgroundColor || '';
@@ -657,9 +655,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Button-Klick-Event-Listener
     allPathsButton.addEventListener('click', async () => {
         if (isButtonClicked) {
-            // Button deaktivieren: Entferne gezeichnete Trips und setze Button zurück
             console.log("Button deaktiviert, entferne alle Trips.");
 
+            // Button deaktivieren
             isButtonClicked = false;
             allPathsButton.classList.remove('clicked');
             allPathsButton.style.backgroundColor = originalBackgroundColor;
@@ -671,16 +669,20 @@ document.addEventListener('DOMContentLoaded', () => {
             // Verstecke das mean_ri
             $("#mean_ri").hide();
         } else {
-            // Button aktivieren: Zeige alle Trips und färbe den Button dunkelgrün
             console.log("Button aktiviert, lade alle Trips.");
 
+            // Button aktivieren
             isButtonClicked = true;
             allPathsButton.classList.add('clicked');
             allPathsButton.style.backgroundColor = "darkgreen";
             allPathsButton.style.color = "white";
 
             // Zeige alle Trips
-            await showAllPaths();
+            try {
+                await showAllPaths();
+            } catch (error) {
+                console.error("Fehler bei showAllPaths:", error);
+            }
         }
     });
 });

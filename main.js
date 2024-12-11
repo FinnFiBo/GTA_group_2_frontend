@@ -558,8 +558,12 @@ function register() {
 }
 
 async function showAllPaths() {
+    // Button-Design ändern
+    allPathsButton = document.getElementById("allPaths");
 
-    $("#allPaths").click(function() {return 0;});
+    allPathsButton.onclick = function() {document.getElementById("allPaths").onclick = showAllPaths; document.getElementById("allPaths").style.backgroundColor = "lightgreen"; document.getElementById("allPaths").style.color = "white";};
+    allPathsButton.style.backgroundColor = "darkgreen";
+    allPathsButton.style.color = "white";
 
     console.log("showAllPaths wird ausgeführt...");
 

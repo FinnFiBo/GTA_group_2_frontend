@@ -89,7 +89,7 @@ function calculateCityRi() {
                 console.error("Fehler beim Berechnen des Stadt-RI:", data.error);
                 return;
             }
-            console.log("Stadt-RI berechnet:", data);
+            console.log("Stadt-RI hallo berechnet:", data);
             document.getElementById("city_value").innerText = data.ri.toFixed(2);
         })
         .catch(error => {
@@ -158,6 +158,9 @@ function onload() {
 
     console.log("App geladen");
 
+    calculateCityRi().then(() => {
+        console.log("Stadt-RI berechnet");
+    });
 }
 
 function getColorByRI(riValue) {

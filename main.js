@@ -412,6 +412,7 @@ function stopTracking() {
                     }
                     appState.lastPoint = null;
                     appState.pointHistory = data.points;
+                    console.log('points:', appState.pointHistory)
                     drawColoredLine();
 
                     if (appState.pointHistory.length > 0) {
@@ -449,8 +450,6 @@ function stopTracking() {
                     
                     appState.mean_ri = null;
                     })
-
-                // Berechnung des Durchschnitts (mean_ri)
 
                                 
             })

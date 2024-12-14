@@ -644,7 +644,7 @@ async function showAllPaths() {
     
     let mean_ri = mean_RIs.reduce((sum, ri) => sum + ri || 0, 0) / mean_RIs.length;
     $("#mean_ri_value").text(mean_ri.toFixed(2));
-    $("#mean-text").text('Mean RI');
+    $("#mean_text").text('Mean RI');
     $("#mean_ri").show();
     $(".legend").show();
 

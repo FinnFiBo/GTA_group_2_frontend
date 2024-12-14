@@ -122,7 +122,7 @@ function onload() {
 
 	$("#start").click(startTracking);
     $("#allPaths").click(showAllPaths);
-    $("#end").click(stopTracking);
+    $("#end").click(stopTracking).hide();
     $("#mean_ri").hide();
     $(".legend").hide();
 
@@ -318,6 +318,7 @@ function startTracking() {
         return;
     }
     
+    // Verstecke den "Start"-Button und zeige den "End"-Button und die "mean_ri"-Anzeige
     $("#start").hide();
     $("#allPaths").hide(); 
     $("#end").show();  
@@ -390,7 +391,7 @@ function startTracking() {
 function stopTracking() {
 
 
-    $("#start").show();
+    $("#start").show(); // Zeigt den "Start"-Button
     $("#allPaths").show();
     $("#end").hide(); 
     $(".legend").show();

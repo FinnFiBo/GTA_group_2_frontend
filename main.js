@@ -586,7 +586,7 @@ async function showAllPaths() {
     // Button-Design ändern
     allPathsButton = document.getElementById("allPaths");
     meanRiValue = document.getElementById("mean_ri_value");
-    allPathsButton.textContent = "Mean RI";
+    meanRiValue.textContent = "Mean RI";
     $("#mean_ri").show();
 
     if (allPathsButton.classList.contains("clicked")) {

@@ -158,9 +158,6 @@ function onload() {
 
     console.log("App geladen");
 
-    calculateCityRi().then(() => {
-        console.log("Stadt-RI berechnet");
-    });
 }
 
 function getColorByRI(riValue) {

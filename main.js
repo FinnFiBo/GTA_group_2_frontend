@@ -80,6 +80,22 @@ let geoOptions = {
     timeout: 12000   // A maximum of 12 seconds before timeout.
 };
 
+function calculateCityRi() {
+    // Berechnet den RI-Wert für alle Trips
+    return fetch(`${app_url}city_ri`, { method: "GET" }) // Return the fetch Promise
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                console.error("Fehler beim Berechnen des Stadt-RI:", data.error);
+                return;
+            }
+            console.log("Stadt-RI berechnet:", data);
+            document.getElementById("city_value").innerText = data.ri.toFixed(2);
+        })
+        .catch(error => {
+            console.error("Fehler beim Berechnen des Stadt-RI:", error);
+        });
+}
 
 /**
  * The onload function is called when the HTML has finished loading.
@@ -141,23 +157,6 @@ function onload() {
     });
 
     console.log("App geladen");
-
-    function calculateCityRi() {
-        // Berechnet den RI-Wert für alle Trips
-        fetch(`${app_url}city_ri`, { method: "GET" })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    console.error("Fehler beim Berechnen des Stadt-RI:", data.error);
-                    return;
-                }
-                console.log("Stadt-RI berechnet:", data);
-                document.getElementById("city_value").innerText = data.ri.toFixed(2);
-            })
-            .catch(error => {
-                console.error("Fehler beim Berechnen des Stadt-RI:", error);
-            });
-    }
 
     calculateCityRi().then(() => {
         console.log("Stadt-RI berechnet");

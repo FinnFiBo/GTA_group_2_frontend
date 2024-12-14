@@ -581,7 +581,6 @@ async function showAllPaths() {
         return;
     }
 
-    appState.loadingPaths = true;
 
     allPathsButton = document.getElementById("allPaths");
 
@@ -596,6 +595,8 @@ async function showAllPaths() {
 
     allPathsButton.classList.add("clicked")
     console.log("showAllPaths wird ausgeführt...");
+
+    appState.loadingPaths = true;
 
     const response = await fetch(`${app_url}get_trips?user_id=${appState.user[0]}`, { method: "GET" });
     const trip_ids = await response.json();

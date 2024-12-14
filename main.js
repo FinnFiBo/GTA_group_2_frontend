@@ -13,6 +13,7 @@ let appState = {
     pointHistory: null,
     currentZoom: 8,
     isTracking: false,
+    loadingPaths: false,
     mean_ri: null,
 };
 
@@ -575,6 +576,13 @@ function register() {
 }
 
 async function showAllPaths() {
+
+    if (appState.loadingPaths) {
+        return;
+    }
+
+    appState.loadingPaths = true;
+
     // Button-Design ändern
     allPathsButton = document.getElementById("allPaths");
     $("#mean_ri").show();
@@ -638,6 +646,8 @@ async function showAllPaths() {
     $("#mean_ri_value").text(mean_ri.toFixed(2));
     $("#mean_ri").show();
     $(".legend").show();
+
+    appState.loadingPaths = false;
 }
 
 function hashPassword(password) {

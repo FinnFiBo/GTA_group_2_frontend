@@ -89,7 +89,7 @@ function calculateCityRi() {
                 console.error("Fehler beim Berechnen des Stadt-RI:", data.error);
                 return;
             }
-            console.log("Stadt-RI hallo berechnet:", data);
+            console.log("Stadt-RI in calculateCityRI berechnet:", data);
             document.getElementById("city_value").innerText = data.ri.toFixed(2);
         })
         .catch(error => {

@@ -20,7 +20,6 @@ let wfs = 'https://baug-ikg-gis-01.ethz.ch:8443/geoserver/GTA24_lab06/wfs';
 let wms = 'https://baug-ikg-gis-01.ethz.ch:8443/geoserver/GTA24_lab06/wms';
 let app_url = 'https://gta-project-group-2.vercel.app/';
 let timer = null;
-let isButtonClicked = false;
 
 
 function drawMarkers() {
@@ -123,7 +122,7 @@ function onload() {
 
 	$("#start").click(startTracking);
     $("#allPaths").click(showAllPaths);
-    $("#end").click(stopTracking).hide();
+    $("#end").click(stopTracking);
     $("#mean_ri").hide();
     $(".legend").hide();
 
@@ -319,7 +318,6 @@ function startTracking() {
         return;
     }
     
-    // Verstecke den "Start"-Button und zeige den "End"-Button und die "mean_ri"-Anzeige
     $("#start").hide();
     $("#allPaths").hide(); 
     $("#end").show();  
@@ -392,7 +390,7 @@ function startTracking() {
 function stopTracking() {
 
 
-    $("#start").show(); // Zeigt den "Start"-Button
+    $("#start").show();
     $("#allPaths").show();
     $("#end").hide(); 
     $(".legend").show();

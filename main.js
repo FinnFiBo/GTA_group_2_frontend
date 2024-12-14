@@ -583,9 +583,7 @@ async function showAllPaths() {
 
     appState.loadingPaths = true;
 
-    // Button-Design ändern
     allPathsButton = document.getElementById("allPaths");
-    $("#mean_ri").show();
 
     if (allPathsButton.classList.contains("clicked")) {
         allPathsButton.classList.remove("clicked");

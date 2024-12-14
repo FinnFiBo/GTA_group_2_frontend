@@ -589,6 +589,7 @@ async function showAllPaths() {
 
     if (allPathsButton.classList.contains("clicked")) {
         allPathsButton.classList.remove("clicked");
+        allPathsButton.textContent = "Mean RI"; 
         appState.color_points.clearLayers();
         appState.points.clearLayers();
         $("#mean_ri").hide();

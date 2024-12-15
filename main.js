@@ -623,9 +623,10 @@ async function showAllPaths() {
             paths[trip_id].push({
                 lat: feature.geometry.coordinates[1],
                 lng: feature.geometry.coordinates[0],
-                ri_value: (feature.properties.ri_value + feature.properties.noise_value + feature.properties.tree_count + feature.properties.pollution_value) / 4
+                ri_value: feature.properties.ri_value
                 
 //hier einfach ri_value nehmen oder nicht??
+//vorher: ri_value: (feature.properties.ri_value + feature.properties.noise_value + feature.properties.tree_count + feature.properties.pollution_value) / 4
 
             });
         });

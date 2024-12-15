@@ -236,9 +236,9 @@ function formatTime(timestamp) {
 
 // INSERT point
 // REF: https://github.com/Georepublic/leaflet-wfs/blob/master/index.html#L201
-function insertPoint(lat, lng, time, trip_id, ri_value, noise, distance) {
+function insertPoint(lat, lng, time, trip_id, ri_value, noise, tree_count, pollution) {
     return new Promise((resolve, reject) => {
-    console.log("Inserting point:", lat, lng, time, trip_id, ri_value, noise, distance);
+    console.log("Inserting point:", lat, lng, time, trip_id, ri_value, noise, tree_count, pollution);
 	let postData = `<wfs:Transaction
 			  service="WFS"
 			  version="1.0.0"
@@ -264,7 +264,8 @@ function insertPoint(lat, lng, time, trip_id, ri_value, noise, distance) {
 						  </gml:Point>
 					  </geometry>
                       <noise_value>${noise}</noise_value>
-                      <tree_distance>${distance}</tree_distance>
+                      <tree_count>${tree_count}</tree_count>
+                      <pollution_value>${pollution}</pollution_value>
 				  </GTA24_lab06:webapp_trajectory_point>
 			  </wfs:Insert>
 		  </wfs:Transaction>`;
@@ -382,7 +383,7 @@ function startTracking() {
         get_ri(appState.latLng) // hier RI-Wert berechnen
         .then(values => {
 
-            insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, values[0], values[1], values[2]);
+            insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, values[0], values[1], values[2], values[3]);
 
             if (timer) {
                 clearInterval(timer);
@@ -394,7 +395,7 @@ function startTracking() {
                     get_ri(appState.latLng) // hier RI-Wert berechnen
                     .then(values => {
                         console.log("RI-Werte:", values);
-                        insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, values[0], values[1], values[2]);
+                        insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, values[0], values[1], values[2], values[3]);
                     });
                 }
             }, 8000);  // Alle 8 Sekunden
@@ -416,7 +417,7 @@ function stopTracking() {
     get_ri(appState.latLng) // hier RI-Wert berechnen
     .then(values => {
     // Letzten Punkt einfügen und nach Abschluss die Linie zeichnen
-        insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, values[0], values[1], values[2])
+        insertPoint(appState.latLng.lat, appState.latLng.lng, appState.time, appState.trip_id, values[0], values[1], values[2], values[3])
             .then(() => {
 
                 //Get point history
@@ -496,8 +497,8 @@ async function get_ri(latlng) {
         return 7; // Fallback auf 7, falls ein Fehler auftritt
     }
     // Ändern
-    console.log("RI-Wert:", data.ri, data.noise, data.distance);
-    return [data.ri, data.noise, data.distance];
+    console.log("RI-Wert:", data.ri, data.noise, data.trees, data.pollution);
+    return [data.ri, data.noise, data.trees, data.pollution];
 }
 
 function login() {
@@ -622,7 +623,8 @@ async function showAllPaths() {
             paths[trip_id].push({
                 lat: feature.geometry.coordinates[1],
                 lng: feature.geometry.coordinates[0],
-                ri_value: (feature.properties.ri_value + feature.properties.noise_value + feature.properties.tree_distance) / 3
+                ri_value: (feature.properties.ri_value + feature.properties.noise_value + feature.properties.tree_count + feature.properties.pollution_value) / 4
+    //stimmt das??
             });
         });
 

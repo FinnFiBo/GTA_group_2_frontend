@@ -356,6 +356,7 @@ function startTracking() {
             .then(data => {
                 if (data.error) {
                     console.error("Fehler beim Anlegen des Trips:", data.error);
+                    alert("Fehler, bitte Trip neu starten")
                     return;
                 }
                 console.log("Trip erfolgreich angelegt:", data);

@@ -101,6 +101,13 @@ function calculateCityRi() {
  * The onload function is called when the HTML has finished loading.
  */
 function onload() {
+
+    // Check if the user is using Safari
+    let isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    if (isSafari) {
+        alert("You are using Safari. Some features may not work as expected.");
+    }
+
     let errMsg = $("#error-messages");
 
     if ("geolocation" in navigator) {

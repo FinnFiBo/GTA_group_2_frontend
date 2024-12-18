@@ -7,7 +7,7 @@ This project is a web application designed to evaluate walking routes based on t
 - **Login and Registration**: Users can create an account and log in to access their trips.
 - **Real-time Tracking**: The app tracks the user's location and evaluates the route based on various datasets.
 - **Trip Evaluation**: The app calculates a "Recreational Index" (RI) for the user's trip, with 0 being the worst and 100 being the best.
-- **Trip History**: Users can view all their trips and the mean RI of each trip.
+- **Trip History**: Users can view all their trips and the mean RI of all trips.
 - **City RI**: The app displays the current mean RI of all user trips in the city.
 
 ## Technologies Used

@@ -18,8 +18,6 @@ This project is a web application designed to evaluate walking routes based on t
 - **jQuery**: For easier DOM manipulation and AJAX requests.
 - **GeoServer**: For handling geospatial data and WFS/WMS requests.
 
-## Getting Started
-
 ### Prerequisites
 
 - A modern web browser with JavaScript enabled.
@@ -39,18 +37,3 @@ This project is a web application designed to evaluate walking routes based on t
 - `index.html`: The main HTML file for the web application.
 - `main.css`: The CSS file for styling the web application.
 - `main.js`: The JavaScript file containing the functionality of the web application.
-
-## Authors
-
-- Finn Bogatu
-- Rhéa Ehrle
-- Robin Holdener
-- Sara Bachmann
-
-## Acknowledgments
-
-- ETH Zürich
-- IKG @ ETH Zürich
-- OpenStreetMap contributors
-- Leaflet library
-- GeoServer

@@ -314,6 +314,8 @@ function insertPoint(lat, lng, time, trip_id, ri_value, noise, tree_count, pollu
 }
 
 function fetchHighestTripId(callback) {
+
+    // Abrufen der höchsten Trip-ID
     fetch(`${app_url}highest_trip_id`, { method: "GET" })
         .then(response => response.json())
         .then(data => {
@@ -435,6 +437,7 @@ function stopTracking() {
                     console.log('points:', appState.pointHistory)
                     drawColoredLine();
 
+                    // Berechnung des Mittelwertes für den aktuellen Pfad
                     if (appState.pointHistory.length > 0) {
                         let mean_ri = appState.pointHistory.reduce((sum, point) => sum + (point.ri_value || 0), 0) / appState.pointHistory.length;
                         appState.mean_ri = mean_ri
@@ -444,6 +447,7 @@ function stopTracking() {
                         $("#mean_ri_value").text("N/A");
                     }
 
+                    // Aktualisieren des mean_ri in der Datenbank
                     fetch(`${app_url}update_mean_ri`, {
                         method: "POST",
                         headers: {
@@ -578,12 +582,12 @@ function register() {
 }
 
 async function showAllPaths() {
-
+    // Falls der Benutzer bereits auf den Button geklickt hat, wird er deaktiviert
     if (appState.loadingPaths) {
         return;
     }
 
-
+    // Wenn der Button geklickt wird, werden alle Pfade angezeigt, wenn nochmal geklickt wird, werden sie ausgeblendet
     allPathsButton = document.getElementById("allPaths");
 
     if (allPathsButton.classList.contains("clicked")) {
@@ -594,12 +598,12 @@ async function showAllPaths() {
         $(".legend").hide();
         return;
     }
-
     allPathsButton.classList.add("clicked")
     console.log("showAllPaths wird ausgeführt...");
 
     appState.loadingPaths = true;
 
+    // Alle Pfade des users abrufen
     const response = await fetch(`${app_url}get_trips?user_id=${appState.user[0]}`, { method: "GET" });
     const trip_ids = await response.json();
 
@@ -609,13 +613,16 @@ async function showAllPaths() {
     }
     console.log("Alle Pfade abgerufen:", trip_ids);
 
+    // Alle Pfade zeichnen
     let mean_RIs = [];
 
     for (let i = 0; i < trip_ids.length; i++) {
+        // Alle Punkte für den aktuellen Pfad abrufen
         const response = await fetch(`${wfs}?service=WFS&version=1.0.0&request=GetFeature&typeName=GTA24_lab06:webapp_trajectory_point&outputFormat=application/json&cql_filter=trip_id=${trip_ids[i]}`, { method: "GET" })
         const data = await response.json();
         let paths = {};
 
+        // Punkte in Pfade gruppieren
         data.features.forEach(feature => {
             let trip_id = feature.properties.trip_id;
             if (!paths[trip_id]) {
@@ -628,10 +635,12 @@ async function showAllPaths() {
             });
         });
 
+        // Pfade zeichnen
         Object.keys(paths).forEach(trip_id => {
             appState.pointHistory = paths[trip_id];
             drawColoredLine();
 
+            // Berechnung des Mittelwertes für den aktuellen Pfad
             if (appState.pointHistory.length > 0) {
                 let mean_ri = appState.pointHistory.reduce((sum, point) => sum + (point.ri_value || 0), 0) / appState.pointHistory.length;
                 mean_RIs.push(mean_ri);
@@ -643,6 +652,7 @@ async function showAllPaths() {
         });
     }
     
+    // Berechnung des Mittelwertes für alle Pfade
     let mean_ri = mean_RIs.reduce((sum, ri) => sum + ri || 0, 0) / mean_RIs.length;
     $("#mean_ri_value").text(mean_ri.toFixed(2));
     $("#mean_text").text('Mean RI');

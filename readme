@@ -1,0 +1,56 @@
+# Web-App GTA
+
+This project is a web application designed to evaluate walking routes based on their potential for relaxation. The app is currently functional for the city of Zürich.
+
+## Features
+
+- **Login and Registration**: Users can create an account and log in to access their trips.
+- **Real-time Tracking**: The app tracks the user's location and evaluates the route based on various datasets.
+- **Trip Evaluation**: The app calculates a "Recreational Index" (RI) for the user's trip, with 0 being the worst and 100 being the best.
+- **Trip History**: Users can view all their trips and the mean RI of each trip.
+- **City RI**: The app displays the current mean RI of all user trips in the city.
+
+## Technologies Used
+
+- **HTML/CSS**: For the structure and styling of the web application.
+- **JavaScript**: For the functionality and interactivity of the app.
+- **Leaflet**: For the map and geolocation features.
+- **jQuery**: For easier DOM manipulation and AJAX requests.
+- **GeoServer**: For handling geospatial data and WFS/WMS requests.
+
+## Getting Started
+
+### Prerequisites
+
+- A modern web browser with JavaScript enabled.
+- Internet connection to load external libraries and APIs.
+
+### Usage
+
+1. Open `index.html` in your web browser.
+2. Register a new account or log in with your existing credentials.
+3. Start a new trip by clicking the "START" button.
+4. Walk around the city and let the app track your route.
+5. End the trip by clicking the "END" button.
+6. View your trip history and the mean RI of your trips.
+
+## Project Structure
+
+- `index.html`: The main HTML file for the web application.
+- `main.css`: The CSS file for styling the web application.
+- `main.js`: The JavaScript file containing the functionality of the web application.
+
+## Authors
+
+- Finn Bogatu
+- Rhéa Ehrle
+- Robin Holdener
+- Sara Bachmann
+
+## Acknowledgments
+
+- ETH Zürich
+- IKG @ ETH Zürich
+- OpenStreetMap contributors
+- Leaflet library
+- GeoServer

@@ -14,6 +14,7 @@ let appState = {
     currentZoom: 8,
     isTracking: false,
     loadingPaths: false,
+    coolDown: false,
     mean_ri: null,
 };
 
@@ -346,6 +347,14 @@ function startTracking() {
     if (appState.isTracking) {
         return;
     }
+
+    // Cooldown aktivieren
+    appState.coolDown = true;
+
+    // Cooldown von 3 Sekunden setzen
+    setTimeout(() => {
+        appState.coolDown = false;
+    }, 3000);
     
     // Verstecke den "Start"-Button und zeige den "End"-Button und die "mean_ri"-Anzeige
     $("#start").hide();
@@ -419,6 +428,11 @@ function startTracking() {
 
 // Tracking stop
 function stopTracking() {
+
+    if (appState.coolDown) {
+        console.log("Cooldown aktiv, bitte warten...");
+        return;
+    }
 
 
     $("#start").show(); // Zeigt den "Start"-Button

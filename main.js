@@ -103,7 +103,9 @@ function calculateCityRi() {
 function onload() {
 
     // Check if the user is using Safari
-    let isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    let isSafari =  /safari/i.test(navigator.userAgent) &&
+                    /version/i.test(navigator.userAgent) &&
+                    !/chrome|android|crios|fxios/i.test(navigator.userAgent);
     if (isSafari) {
         alert("You are using Safari. Some features may not work as expected.");
     }

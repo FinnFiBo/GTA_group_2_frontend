@@ -38,6 +38,10 @@ h1 {
     line-height: 1.2;
 }
 
+i {
+    margin-right: 0.25em;
+  }
+
 footer {
     color: #3e703e;
     background: #4caf50;
